@@ -208,7 +208,7 @@ class CarState(CarStateBase):
 
     if self.CP.carFingerprint in HONDA_NIDEC_SERIAL_STEERING:
       steer_status = 1
-      ret.steerError = bool(cp_cam.vl["STEER_MOTOR_TORQUE"]['LKAS_DISABLED'])
+      ret.steerError = bool(cp_cam.vl["STEER_STATUS"]['LIN_INTERFACE_FATAL_ERROR'])
       self.steer_not_allowed =  bool(abs(cp_cam.vl["STEER_STATUS"]['STEER_TORQUE_SENSOR']) > 95)
       ret.steerWarning = False
     else:
@@ -378,7 +378,7 @@ class CarState(CarStateBase):
     if CP.carFingerprint in HONDA_NIDEC_SERIAL_STEERING:
       checks = [("STEER_MOTOR_TORQUE",0),
                 ("STEER_STATUS",0)]
-      signals += [("LKAS_DISABLED", "STEER_MOTOR_TORQUE", 0),
+      signals += [("LIN_INTERFACE_FATAL_ERROR", "STEER_STATUS", 0),
                   ("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0)]
                  
