@@ -84,6 +84,7 @@ class CarController():
     self.last_pump_ts = 0.
     self.packer = CANPacker(dbc_name)
     self.new_radar_config = False
+    self.apply_steer_over_max_counter = 0
 
     self.params = CarControllerParams(CP)
 
