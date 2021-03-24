@@ -1,17 +1,12 @@
 from selfdrive.config import Conversions as CV
 from common.params import Params
-from selfdrive.car.honda.values import HONDA_BOSCH
+from selfdrive.car.honda.values import HONDA_BOSCH, HONDA_NIDEC_SERIAL_STEERING
 
 # CAN bus layout with relay
 # 0 = ACC-CAN - radar side
 # 1 = F-CAN B - powertrain
 # 2 = ACC-CAN - camera side
 # 3 = F-CAN A - OBDII port
-
-# CAN bus layout with giraffe
-# 0 = F-CAN B - powertrain
-# 1 = ACC-CAN - camera side
-# 2 = ACC-CAN - radar side
 
 def get_pt_bus(car_fingerprint, has_relay):
   return 1 if car_fingerprint in HONDA_BOSCH and has_relay else 0
@@ -90,7 +85,7 @@ def create_steering_control(packer, apply_steer, lkas_active, car_fingerprint, i
     "STEER_TORQUE": apply_steer if lkas_active else 0,
     "STEER_TORQUE_REQUEST": lkas_active,
   }
-  bus = get_lkas_cmd_bus(car_fingerprint, has_relay, radar_disabled)
+  bus = 2 if car_fingerprint in HONDA_NIDEC_SERIAL_STEERING else get_lkas_cmd_bus(car_fingerprint, radar_disabled)
   return packer.make_can_msg("STEERING_CONTROL", bus, values, idx)
 
 
