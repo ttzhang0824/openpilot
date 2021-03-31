@@ -259,6 +259,12 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
       "But Kegman re-enabled it.  Enjoy.",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 15.),
+  EventName.dashcamMode: {
+    ET.PERMANENT: Alert(
+      "Dashcam Mode",
+      "",
+      AlertStatus.normal, AlertSize.small,
+      Priority.LOWEST, VisualAlert.none, AudibleAlert.none, 0., 0., .2),
   },
 
   EventName.invalidLkasSetting: {
@@ -329,6 +335,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
   },
 
   EventName.vehicleModelInvalid: {
+    ET.NO_ENTRY: NoEntryAlert("Vehicle Parameter Identification Failed"),
     ET.WARNING: Alert(
       "Vehicle Parameter Identification Failed",
       "",
@@ -739,7 +746,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
   EventName.speedTooHigh: {
     ET.WARNING: Alert(
       "Speed Too High",
-      "Slow down to resume operation",
+      "Model uncertain at this speed",
       AlertStatus.normal, AlertSize.mid,
       Priority.HIGH, VisualAlert.steerRequired, AudibleAlert.none, 2.2, 3., 4.),
     ET.NO_ENTRY: Alert(
