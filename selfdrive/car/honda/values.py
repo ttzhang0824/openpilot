@@ -37,6 +37,7 @@ class CAR:
   ACCORD = "HONDA ACCORD 2018 SPORT 2T"
   ACCORD_15 = "HONDA ACCORD 2018 LX 1.5T"
   ACCORDH = "HONDA ACCORD 2018 HYBRID TOURING"
+  ACCORD_2016 = "HONDA ACCORD 2016 SERIAL STEERING"                                                   
   CIVIC = "HONDA CIVIC 2016 TOURING"
   CIVIC_BOSCH = "HONDA CIVIC HATCHBACK 2017 SEDAN/COUPE 2019"
   CIVIC_BOSCH_DIESEL = "HONDA CIVIC SEDAN 1.6 DIESEL"
@@ -55,6 +56,8 @@ class CAR:
   PILOT_2019 = "HONDA PILOT 2019 ELITE"
   RIDGELINE = "HONDA RIDGELINE 2017 BLACK EDITION"
   INSIGHT = "HONDA INSIGHT 2019 TOURING"
+  ACURA_MDX = "ACURA MDX 2018 STANDARD"
+
 
 # diag message that in some Nidec cars only appear with 1s freq if VIN query is performed
 DIAG_MSGS = {1600: 5, 1601: 8}
@@ -69,6 +72,9 @@ FINGERPRINTS = {
   CAR.ACCORDH: [{
     148: 8, 228: 5, 304: 8, 330: 8, 344: 8, 380: 8, 387: 8, 388: 8, 399: 7, 419: 8, 420: 8, 427: 3, 432: 7, 441: 5, 450: 8, 464: 8, 477: 8, 479: 8, 495: 8, 525: 8, 545: 6, 662: 4, 773: 7, 777: 8, 780: 8, 804: 8, 806: 8, 808: 8, 829: 5, 862: 8, 884: 8, 891: 8, 927: 8, 929: 8, 1302: 8, 1600: 5, 1601: 8, 1652: 8
   }],
+  CAR.ACCORD_2016: [{
+    57: 3, 145: 8, 316: 8, 342: 6, 344: 8, 380: 8, 398: 3, 401: 8, 420: 8, 422: 8, 426: 8, 432: 7, 464: 8, 476: 4, 487: 4, 490: 8, 506: 8, 507: 1, 542: 7, 545: 4, 597: 8, 660: 8, 661: 4, 773: 7, 777: 8, 780: 8, 800: 8, 804: 8, 808: 8, 829: 5, 871: 8, 882: 2, 884: 8, 891: 8, 892: 8, 918: 7, 923: 2, 927: 8, 929: 8, 983: 8, 985: 3, 1024: 5, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1057: 5, 1064: 7, 1088: 8, 1089: 8, 1108: 8, 1125: 8, 1296: 3, 1365: 5, 1424: 5, 1600: 5, 1601: 8
+  }],  
   CAR.ACURA_ILX: [{
     57: 3, 145: 8, 228: 5, 304: 8, 316: 8, 342: 6, 344: 8, 380: 8, 398: 3, 399: 7, 419: 8, 420: 8, 422: 8, 428: 8, 432: 7, 464: 8, 476: 4, 490: 8, 506: 8, 512: 6, 513: 6, 542: 7, 545: 4, 597: 8, 660: 8, 773: 7, 777: 8, 780: 8, 800: 8, 804: 8, 808: 8, 819: 7, 821: 5, 829: 5, 882: 2, 884: 7, 887: 8, 888: 8, 892: 8, 923: 2, 929: 4, 983: 8, 985: 3, 1024: 5, 1027: 5, 1029: 8, 1030: 5, 1034: 5, 1036: 8, 1039: 8, 1057: 5, 1064: 7, 1108: 8, 1365: 5,
   }],
@@ -78,6 +84,9 @@ FINGERPRINTS = {
   }],
   CAR.ACURA_RDX_3G: [{
     57: 3, 148: 8, 228: 5, 304: 8, 330: 8, 344: 8, 380: 8, 399: 7, 401: 8, 420: 8, 423: 2, 427: 3, 428: 8, 432: 7, 441: 5, 450: 8, 464: 8, 470: 2, 476: 7, 477: 8, 479: 8, 490: 8, 493: 5, 495: 8, 506: 8, 507: 1, 545: 6, 597: 8, 662: 4, 773: 7, 777: 8, 780: 8, 795: 8, 800: 8, 804: 8, 806: 8, 808: 8, 815: 8, 825: 4, 829: 5, 846: 8, 862: 8, 881: 8, 882: 4, 884: 8, 888: 8, 891: 8, 892: 8, 918: 7, 927: 8, 929: 8, 983: 8, 985: 3, 1024: 5, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1064: 6, 1092: 1, 1108: 8, 1115: 2, 1125: 8, 1127: 2, 1296: 8, 1302: 8, 1322: 5, 1361: 5, 1365: 5, 1424: 5, 1600: 5, 1601: 8, 1633: 8
+  }],
+  CAR.ACURA_MDX: [{
+    57: 3, 145: 8, 308: 5, 316: 8, 334: 8, 342: 6, 344: 8, 379: 8, 380: 8, 398: 3, 411: 5, 419: 8, 420: 8, 422: 8, 425: 8, 426: 8, 432: 7, 450: 8, 463: 8, 464: 8, 476: 4, 487: 4, 490: 8, 506: 8, 521: 8, 542: 7, 545: 5, 546: 3, 597: 8, 660: 8, 773: 7, 777: 8, 780: 8, 800: 8, 804: 8, 808: 8, 819: 7, 821: 5, 825: 4, 829: 5, 837: 5, 856: 7, 871: 8, 881: 8, 882: 2, 884: 7, 891: 8, 892: 8, 918: 7, 923: 2, 927: 8, 929: 8, 983: 8, 985: 3, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1064: 7, 1070: 8, 1088: 8, 1089: 8, 1092: 1, 1108: 8, 1110: 8, 1125: 8, 1137: 8, 1296: 8, 1348: 5, 1600: 5, 1601: 8, 1612: 5, 1614: 5, 1615: 8, 1618: 5, 1665: 5
   }],
   CAR.CIVIC: [{
     57: 3, 148: 8, 228: 5, 304: 8, 330: 8, 344: 8, 380: 8, 399: 7, 401: 8, 420: 8, 427: 3, 428: 8, 432: 7, 450: 8, 464: 8, 470: 2, 476: 7, 487: 4, 490: 8, 493: 5, 506: 8, 512: 6, 513: 6, 545: 6, 597: 8, 662: 4, 773: 7, 777: 8, 780: 8, 795: 8, 800: 8, 804: 8, 806: 8, 808: 8, 829: 5, 862: 8, 884: 8, 891: 8, 892: 8, 927: 8, 929: 8, 985: 3, 1024: 5, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1108: 8, 1302: 8, 1322: 5, 1361: 5, 1365: 5, 1424: 5, 1633: 8,
@@ -307,6 +316,20 @@ FW_VERSIONS = {
       b'39990-TBX-H120\x00\x00',
     ],
   },
+  CAR.ACCORD_2016: {
+    (Ecu.vsa, 0x18DA28F1, None): [
+      b'57114-T2F-X840\x00\x00',
+    ],
+    (Ecu.fwdRadar, 0x18DAB0F1, None): [
+      b'36161-T2F-A140\x00\x00',
+    ],
+    (Ecu.combinationMeter, 0x18DA60F1, None): [
+      b'78109-T2F-L110\x00\x00',
+    ],
+    (Ecu.srs, 0x18DA53F1, None): [
+      b'77959-T2F-A030\x00\x00',
+    ],
+  },    
   CAR.ACCORDH: {
     (Ecu.gateway, 0x18daeff1, None): [
       b'38897-TWA-A120\x00\x00',
@@ -1032,6 +1055,32 @@ FW_VERSIONS = {
       b'78109-TXM-A030\x00\x00',
     ],
   },
+  CAR.ACURA_MDX: {
+    (Ecu.programmedFuelInjection, 0x18da10f1, None): [
+      b'37805-5BN-3070\000\000',
+    ],
+    (Ecu.fwdRadar, 0x18dab0f1, None): [
+      b'36161-TZ6-A340\000\000',
+    ],
+    (Ecu.gateway, 0x18daeff1, None): [
+      b'38897-TZ5-A110\000\000',
+    ],
+    (Ecu.vsa, 0x18da28f1, None): [
+      b'57114-TZ6-A810\000\000',
+    ],
+    (Ecu.transmission, 0x18da1ef1, None): [
+      b'28101-5DH-A110\000\000',
+    ],
+    (Ecu.shiftByWire, 0x18da0bf1, None): [
+      b'54008-TZ5-A910\000\000',
+    ],
+    (Ecu.combinationMeter, 0x18da60f1, None): [
+      b'78109-TYS-A020\000\000',
+    ],
+    (Ecu.srs, 0x18da53f1, None): [
+      b'77959-TZ5-A220\000\000',
+    ],
+  },
   CAR.HRV: {
     (Ecu.gateway, 0x18daeff1, None): [
       b'38897-T7A-A010\x00\x00',
@@ -1075,6 +1124,7 @@ DBC = {
   CAR.ACCORD: dbc_dict('honda_accord_s2t_2018_can_generated', None),
   CAR.ACCORD_15: dbc_dict('honda_accord_lx15t_2018_can_generated', None),
   CAR.ACCORDH: dbc_dict('honda_accord_s2t_2018_can_generated', None),
+  CAR.ACCORD_2016: dbc_dict('honda_accord_touring_2016_can', 'acura_ilx_2016_nidec'),  
   CAR.ACURA_ILX: dbc_dict('acura_ilx_2016_can_generated', 'acura_ilx_2016_nidec'),
   CAR.ACURA_RDX: dbc_dict('acura_rdx_2018_can_generated', 'acura_ilx_2016_nidec'),
   CAR.ACURA_RDX_3G: dbc_dict('acura_rdx_2020_can_generated', None),
@@ -1093,12 +1143,15 @@ DBC = {
   CAR.PILOT_2019: dbc_dict('honda_pilot_touring_2017_can_generated', 'acura_ilx_2016_nidec'),
   CAR.RIDGELINE: dbc_dict('honda_ridgeline_black_edition_2017_can_generated', 'acura_ilx_2016_nidec'),
   CAR.INSIGHT: dbc_dict('honda_insight_ex_2019_can_generated', None),
+  CAR.ACURA_MDX: dbc_dict('acura_mdx_2018', 'acura_ilx_2016_nidec'),  # NEED TO FIND THIS OUT- HOW DOES THIS LOOK COMPARED TO THE PILOT?
+
 }
 
 STEER_THRESHOLD = {
   CAR.ACCORD: 1200,
   CAR.ACCORD_15: 1200,
   CAR.ACCORDH: 1200,
+  CAR.ACCORD_2016: 25,                                                                  
   CAR.ACURA_ILX: 1200,
   CAR.ACURA_RDX: 400,
   CAR.ACURA_RDX_3G: 1200,
@@ -1117,12 +1170,14 @@ STEER_THRESHOLD = {
   CAR.PILOT_2019: 1200,
   CAR.RIDGELINE: 1200,
   CAR.INSIGHT: 1200,
+  CAR.ACURA_MDX: 25,                                                                  
 }
 
 SPEED_FACTOR = {
   CAR.ACCORD: 1.,
   CAR.ACCORD_15: 1.,
   CAR.ACCORDH: 1.,
+  CAR.ACCORD_2016: 1.,                      
   CAR.ACURA_ILX: 1.,
   CAR.ACURA_RDX: 1.,
   CAR.ACURA_RDX_3G: 1.,
@@ -1141,6 +1196,8 @@ SPEED_FACTOR = {
   CAR.PILOT_2019: 1.,
   CAR.RIDGELINE: 1.,
   CAR.INSIGHT: 1.,
+  CAR.ACURA_MDX: 1.,
 }
 
 HONDA_BOSCH = set([CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_5G, CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G])
+HONDA_NIDEC_SERIAL_STEERING = set([CAR.ACCORD_2016, CAR.ACURA_MDX])
