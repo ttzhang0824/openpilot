@@ -23,7 +23,7 @@ def compute_gb_honda(accel, speed):
   creep_brake_value = 0.15
   if speed < creep_speed:
     creep_brake = (creep_speed - speed) / creep_speed * creep_brake_value
-  return float(accel) / 4.8 - creep_brake
+  return float(accel) / 4.0 - creep_brake
 
 
 def get_compute_gb_acura():
@@ -78,6 +78,7 @@ class CarInterface(CarInterfaceBase):
     self.last_enable_pressed = 0
     self.last_enable_sent = 0
 
+    #See if Acura BP is better than the Honda Option
     if self.CS.CP.carFingerprint == CAR.ACURA_ILX:
       self.compute_gb = get_compute_gb_acura()
     else:
@@ -212,6 +213,21 @@ class CarInterface(CarInterfaceBase):
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.3], [0.09]]
       else:
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.6], [0.18]]
+        
+    elif candidate == CAR.ACCORD_2016:
+      stop_and_go = False
+      ret.safetyParam = 1 
+      ret.mass = 3360. * CV.LB_TO_KG + STD_CARGO_KG
+      ret.wheelbase = 2.75
+      ret.centerToFront = ret.wheelbase * 0.39
+      ret.steerRatio = 13.23 
+      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 238], [0, 238]]  # TODO: determine if there is a dead zone at the top end
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.24], [0.08]]      
+      tire_stiffness_factor = 0.8467
+      ret.longitudinalTuning.kpBP = [0., 5., 35.]
+      ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
+      ret.longitudinalTuning.kiBP = [0., 35.]
+      ret.longitudinalTuning.kiV = [0.18, 0.12]   
 
     elif candidate == CAR.ACURA_ILX:
       stop_and_go = False
@@ -404,6 +420,22 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
       ret.longitudinalTuning.kiV = [0.18, 0.12]
+      
+    elif candidate == CAR.ACURA_MDX:
+      stop_and_go = False
+      ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
+      ret.wheelbase = 2.82
+      ret.centerToFront = ret.wheelbase * 0.428
+      ret.steerRatio = 15.66  # as spec
+      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 240], [0, 240]]  # TODO: determine if there is a dead zone at the top end
+      tire_stiffness_factor = 0.444
+      ret.steerActuatorDelay = 0.3
+      ret.lateralTuning.pid.kf = 0.000090
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.24], [0.13]]
+      ret.longitudinalTuning.kpBP = [0., 5., 35.]
+      ret.longitudinalTuning.kpV = [2, 1.6, 1]
+      ret.longitudinalTuning.kiBP = [0., 35.]
+      ret.longitudinalTuning.kiV = [0.36, 0.22]
 
     else:
       raise ValueError("unsupported car %s" % candidate)
@@ -429,8 +461,8 @@ class CarInterface(CarInterfaceBase):
 
     ret.stoppingControl = True
     ret.startAccel = 0.5
-
-    ret.steerActuatorDelay = 0.1
+    #Remove global since I am not sure it will over write
+    #ret.steerActuatorDelay = 0.1
     ret.steerRateCost = 0.5
     ret.steerLimitTimer = 0.8
 
