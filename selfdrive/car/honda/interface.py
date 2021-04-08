@@ -238,9 +238,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.24], [0.08]]      
       tire_stiffness_factor = 0.8467
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
+      ret.longitudinalTuning.kpV = [0.3, 0.4, 0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.18, 0.12]   
+      ret.longitudinalTuning.kiV = [0.05, 0.1]   
     elif candidate == CAR.ACURA_ILX:
       stop_and_go = False
       ret.mass = 3095. * CV.LB_TO_KG + STD_CARGO_KG
@@ -478,12 +478,12 @@ class CarInterface(CarInterfaceBase):
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
     ret.gasMaxBP =[ 0., 3, 8, 35] if ret.enableGasInterceptor else [0.]  # m/s
-    ret.gasMaxV = [0.2, 0.3, 0.5, 0.6] if ret.enableGasInterceptor else [0.]  # max gas allowed
+    ret.gasMaxV = [0.2, 0.25, 0.3, 0.6] if ret.enableGasInterceptor else [0.]  # max gas allowed
     ret.brakeMaxBP = [5., 20.]  # m/s
     ret.brakeMaxV = [1., 0.8]   # max brake allowed
 
     ret.stoppingControl = True
-    ret.startAccel = 0.25
+    ret.startAccel = 0.15
 
     ret.steerActuatorDelay = 0.1
     ret.steerLimitTimer = 0.8
