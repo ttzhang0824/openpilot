@@ -227,7 +227,7 @@ class CarInterface(CarInterfaceBase):
       else:
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.6], [0.18]]
     
-    elif candidate == CAR.ACCORD_2016:
+    elif candidate == CAR.ACCORD_NIDEC_SS:
       stop_and_go = False
       ret.safetyParam = 1 
       ret.mass = 3360. * CV.LB_TO_KG + STD_CARGO_KG
@@ -240,7 +240,7 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
       ret.longitudinalTuning.kpV = [0.3, 0.4, 0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.05, 0.1]   
+      ret.longitudinalTuning.kiV = [0.06, 0.1]   
     elif candidate == CAR.ACURA_ILX:
       stop_and_go = False
       ret.mass = 3095. * CV.LB_TO_KG + STD_CARGO_KG
