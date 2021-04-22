@@ -23,7 +23,7 @@ def compute_gb_honda(accel, speed):
   creep_brake_value = 0.15
   if speed < creep_speed:
     creep_brake = (creep_speed - speed) / creep_speed * creep_brake_value
-  return float(accel) / 4.0 - creep_brake
+  return float(accel) / 3.0 - creep_brake
 
 
 def get_compute_gb_acura():
@@ -433,9 +433,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kf = 0.000040
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [1.85, 1.5, 1.4]
+      ret.longitudinalTuning.kpV = [0.0185, 0.0285,0.0285]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.6, 0.9]
+      ret.longitudinalTuning.kiV = [0.0001, 0.0001]
 
     else:
       raise ValueError("unsupported car %s" % candidate)
