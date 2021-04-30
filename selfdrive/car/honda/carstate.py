@@ -83,8 +83,8 @@ def get_can_signals(CP):
     ]
 
   if CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
-      checks += [("STEER_MOTOR_TORQUE",100),
-                ("STEER_STATUS",100)]
+      checks += [("STEER_MOTOR_TORQUE",0),
+                ("STEER_STATUS",0)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
                   ("STEER_STATUS", "STEER_STATUS", 0)]
