@@ -87,8 +87,7 @@ def get_can_signals(CP):
                 ("STEER_STATUS",100)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
-                  ("STEER_STATUS", "STEER_STATUS", 0),
-                  ("WHEELS_MOVING", "STANDSTILL", 1)]
+                  ("STEER_STATUS", "STEER_STATUS", 0)]
   if CP.carFingerprint in HONDA_BOSCH:
     # Civic is only bosch to use the same brake message as other hondas.
     if CP.carFingerprint not in (CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT):
@@ -125,6 +124,9 @@ def get_can_signals(CP):
   elif CP.carFingerprint == CAR.HRV:
     signals += [("DRIVERS_DOOR_OPEN", "SCM_BUTTONS", 1),
                 ("WHEELS_MOVING", "STANDSTILL", 1)]
+  elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
+    signals += [("WHEELS_MOVING", "STANDSTILL", 1)]
+
   else:
     signals += [("DOOR_OPEN_FL", "DOORS_STATUS", 1),
                 ("DOOR_OPEN_FR", "DOORS_STATUS", 1),
