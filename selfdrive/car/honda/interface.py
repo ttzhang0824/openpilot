@@ -23,7 +23,7 @@ def compute_gb_honda(accel, speed):
   creep_brake_value = 0.15
   if speed < creep_speed:
     creep_brake = (creep_speed - speed) / creep_speed * creep_brake_value
-  return float(accel) / 3.0 - creep_brake
+  return float(accel) / 4.8 - creep_brake
 
 
 def get_compute_gb_acura():
