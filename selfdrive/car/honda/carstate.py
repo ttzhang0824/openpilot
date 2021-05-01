@@ -62,7 +62,7 @@ def get_can_signals(CP):
       ("VSA_STATUS", 50),
   ]
 
-  if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_NIDEC_SS):
+  if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_NIDEC_SS, CAR.ACURA_MDX_HYBRID):
     checks += [
       ("SCM_FEEDBACK", 25),
       ("SCM_BUTTONS", 50),
@@ -126,7 +126,6 @@ def get_can_signals(CP):
                 ("WHEELS_MOVING", "STANDSTILL", 1)]
   elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
     signals += [("WHEELS_MOVING", "STANDSTILL", 1)]
-
   else:
     signals += [("DOOR_OPEN_FL", "DOORS_STATUS", 1),
                 ("DOOR_OPEN_FR", "DOORS_STATUS", 1),
