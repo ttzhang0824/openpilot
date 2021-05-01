@@ -83,8 +83,8 @@ def get_can_signals(CP):
     ]
 
   if CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
-      checks += [("STEER_MOTOR_TORQUE",0),
-                ("STEER_STATUS",0)]
+      checks += [("STEER_MOTOR_TORQUE",100),
+                ("STEER_STATUS",100)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
                   ("STEER_STATUS", "STEER_STATUS", 0)]
@@ -111,7 +111,7 @@ def get_can_signals(CP):
                 ("CRUISE_SPEED_OFFSET", "CRUISE_PARAMS", 0)]
     checks += [("STANDSTILL", 50)]
 
-    if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_NIDEC_SS):
+    if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_NIDEC_SS, CAR.ACURA_MDX_HYBRID):
       checks += [("CRUISE_PARAMS", 10)]
     else:
       checks += [("CRUISE_PARAMS", 50)]
@@ -171,7 +171,7 @@ def get_can_signals(CP):
     checks += [("GAS_PEDAL", 100)]
   elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
     signals += [("MAIN_ON", "SCM_BUTTONS", 0),
-                ("CAR_GAS", "GAS_PEDAL", 0)]
+                ("CAR_GAS", "GAS_PEDAL", 0)] #WHY ISNT THIS HERE?
 
   # add gas interceptor reading if we are using it
   if CP.enableGasInterceptor:
@@ -310,12 +310,11 @@ class CarState(CarStateBase):
     if self.CP.carFingerprint in (CAR.ACCORD_NIDEC_SS):
       ret.steeringTorque = cp_cam.vl["STEER_STATUS"]['STEER_TORQUE_SENSOR']
       ret.steeringTorqueEps = cp_cam.vl["STEER_MOTOR_TORQUE"]['MOTOR_TORQUE']
-      self.steer_not_allowed = bool(abs(ret.steeringTorque) > 75)
     else:
       ret.steeringTorque = cp.vl["STEER_STATUS"]['STEER_TORQUE_SENSOR']
       ret.steeringTorqueEps = cp.vl["STEER_MOTOR_TORQUE"]['MOTOR_TORQUE']
 
-    if self.CP.carFingerprint in (CAR.ACURA_MDX_HYBRID):
+    if self.CP.carFingerprint in (CAR.ACCORD_NIDEC_SS,CAR.ACURA_MDX_HYBRID):
       self.steer_not_allowed = bool(abs(ret.steeringTorque) > 75)
 
     ret.steeringPressed = abs(ret.steeringTorque) > STEER_THRESHOLD[self.CP.carFingerprint]
