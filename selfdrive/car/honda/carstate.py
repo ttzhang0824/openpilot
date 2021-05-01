@@ -433,7 +433,7 @@ class CarState(CarStateBase):
                   ("ICONS", "ACC_HUD", 0)]
 
     # all hondas except CRV, RDX and 2019 Odyssey@China use 0xe4 for steering
-    #checks = [(0xe4, 100)]
+    checks = [(0xe4, 100)]
     if CP.carFingerprint in [CAR.CRV, CAR.CRV_EU, CAR.ACURA_RDX, CAR.ODYSSEY_CHN]:
       checks = [(0x194, 100)]
     if CP.carFingerprint in (CAR.ACCORD_NIDEC_SS):
@@ -442,6 +442,8 @@ class CarState(CarStateBase):
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
                   ("STEER_STATUS", "STEER_STATUS", 0)]
+    if CP.carFingerprint in (CAR.ACURA_MDX_HYBRID):
+      checks = []
 
     bus_cam = 1 if CP.carFingerprint in HONDA_BOSCH and not CP.isPandaBlack else 2
     return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, bus_cam)
