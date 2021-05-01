@@ -135,6 +135,29 @@ class CarController():
     apply_steer = int(interp(-actuators.steer * P.STEER_MAX, P.STEER_LOOKUP_BP, P.STEER_LOOKUP_V))
 
     lkas_active = enabled and not CS.steer_not_allowed and CS.lkMode #and not CS.left_blinker_on and not CS.right_blinker_on  # add LKAS button to toggle steering
+    if apply_steer > 229 and False:
+      apply_steer_orig = apply_steer
+      apply_steer = (apply_steer - 229) * 2 + apply_steer
+      if apply_steer > 240:
+        self.apply_steer_over_max_counter += 1
+        if self.apply_steer_over_max_counter > 3:
+          apply_steer = apply_steer_orig
+          self.apply_steer_over_max_counter = 0
+      else:
+        self.apply_steer_over_max_counter = 0
+    elif apply_steer < -229 and False:
+      apply_steer_orig = apply_steer
+      apply_steer = (apply_steer + 229) * 2 + apply_steer
+      if apply_steer < -240:
+        self.apply_steer_over_max_counter+= 1
+        if self.apply_steer_over_max_counter > 3:
+          apply_steer = apply_steer_orig
+          self.apply_steer_over_max_counter = 0
+      else:
+        self.apply_steer_over_max_counter = 0
+    else:
+      self.apply_steer_over_max_counter = 0
+    lkas_active = enabled and not CS.steer_not_allowed
     
     # Send CAN commands.
     can_sends = []
