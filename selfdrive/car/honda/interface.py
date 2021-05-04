@@ -438,7 +438,7 @@ class CarInterface(CarInterfaceBase):
       ret.wheelbase = 2.82
       ret.centerToFront = ret.wheelbase * 0.428
       ret.steerRatio = 17.25  # as spec
-      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 239], [0, 239]]  # TODO: determine if there is a dead zone at the top end
+      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 240], [0, 240]]  # TODO: determine if there is a dead zone at the top end #WHy is this 240 and not 239 like the _SS??
       tire_stiffness_factor = 0.444
       ret.steerActuatorDelay = 0.3
       ret.lateralTuning.pid.kf = 0.000090
