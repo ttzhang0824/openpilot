@@ -433,9 +433,9 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kf = 0.000040
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [0.0185, 0.0285,0.0285]
+      ret.longitudinalTuning.kpV = [1.2, 0.8,0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.0001, 0.0001]
+      ret.longitudinalTuning.kiV = [0.18, 0.12]
 
     else:
       raise ValueError("unsupported car %s" % candidate)
