@@ -111,16 +111,7 @@ def get_can_signals(CP):
     signals += [("DRIVERS_DOOR_OPEN", "SCM_BUTTONS", 1)]
   elif CP.carFingerprint == CAR.HRV:
     signals += [("DRIVERS_DOOR_OPEN", "SCM_BUTTONS", 1),
-                ("WHEELS_MOVING", "STANDSTILL", 1)]
-  elif CP.carFingerprint == CAR.ACURA_MDX:
-    signals += [("WHEELS_MOVING", "STANDSTILL", 1)]
-    signals += [("DOOR_OPEN_FL", "DOORS_STATUS", 1),
-                ("DOOR_OPEN_FR", "DOORS_STATUS", 1),
-                ("DOOR_OPEN_RL", "DOORS_STATUS", 1),
-                ("DOOR_OPEN_RR", "DOORS_STATUS", 1),
-                ("WHEELS_MOVING", "STANDSTILL", 1)]
-    checks += [("DOORS_STATUS", 3)]
-    
+                ("WHEELS_MOVING", "STANDSTILL", 1)]   
   else:
     signals += [("DOOR_OPEN_FL", "DOORS_STATUS", 1),
                 ("DOOR_OPEN_FR", "DOORS_STATUS", 1),
@@ -213,7 +204,6 @@ class CarState(CarStateBase):
     elif self.CP.carFingerprint == CAR.HRV:
       ret.doorOpen = bool(cp.vl["SCM_BUTTONS"]['DRIVERS_DOOR_OPEN'])
     elif self.CP.carFingerprint == CAR.ACURA_MDX:
-      #ret.doorOpen = False
       ret.doorOpen = any([cp.vl["DOORS_STATUS"]['DOOR_OPEN_FL'], cp.vl["DOORS_STATUS"]['DOOR_OPEN_FR'],
                           cp.vl["DOORS_STATUS"]['DOOR_OPEN_RL'], cp.vl["DOORS_STATUS"]['DOOR_OPEN_RR']])
       ret.standstill = not cp.vl["STANDSTILL"]['WHEELS_MOVING']
