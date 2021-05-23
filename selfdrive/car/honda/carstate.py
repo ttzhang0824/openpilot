@@ -101,7 +101,7 @@ def get_can_signals(CP):
                 ("CRUISE_SPEED_OFFSET", "CRUISE_PARAMS", 0)]
     checks += [("STANDSTILL", 50)]
 
-    if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_2016):
+    if CP.carFingerprint in (CAR.ODYSSEY_CHN, CAR.ACCORD_2016,CAR.ACURA_MDX):
       checks += [("CRUISE_PARAMS", 10)]
     else:
       checks += [("CRUISE_PARAMS", 50)]
