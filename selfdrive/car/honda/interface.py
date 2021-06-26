@@ -240,7 +240,7 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
       ret.longitudinalTuning.kpV = [1.0, 0.8, 0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.1, 0.08]   
+      ret.longitudinalTuning.kiV = [0.18, 0.12]   
     elif candidate == CAR.ACURA_ILX:
       stop_and_go = False
       ret.mass = 3095. * CV.LB_TO_KG + STD_CARGO_KG
