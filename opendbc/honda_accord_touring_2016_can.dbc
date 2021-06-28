@@ -94,7 +94,7 @@ BO_ 398 XXX_3: 3 XXX
  SG_ COUNTER : 21|2@0+ (1,0) [0|15] "" XXX
  SG_ CHECKSUM : 19|4@0+ (1,0) [0|3] "" XXX
 
-BO_ 399 STEER_STATUS: 4 EPS
+BO_ 400 STEER_STATUS: 4 EPS
  SG_ LIN_INTERFACE_FATAL_ERROR : 10|1@0+ (1,0) [0|1] "" XXX
  SG_ CAN_STEER_CHECKSUM_ERROR : 11|1@0+ (1,0) [0|1] "" XXX
  SG_ CAN_STEER_CHECKSUM_FATAL_ERROR : 12|1@0+ (1,0) [0|1] "" XXX
@@ -507,7 +507,7 @@ BO_TX_BU_ 780 : NEO,ADAS;
 BO_TX_BU_ 829 : NEO,ADAS;
 BO_TX_BU_ 927 : NEO,ADAS;
 					
-VAL_ 399 STEER_STATUS 6 "tmp_fault" 5 "fault_1" 4 "no_torque_alert_2" 3 "low_speed_lockout" 2 "no_torque_alert_1" 0 "normal" ;					
-VAL_ 399 STEER_STATUS 2 "lkas_fatal_error" 1 "no_torque_alert_1" 0 "normal";
+VAL_ 400 STEER_STATUS 6 "tmp_fault" 5 "fault_1" 4 "no_torque_alert_2" 3 "low_speed_lockout" 2 "no_torque_alert_1" 0 "normal" ;					
+VAL_ 400 STEER_STATUS 2 "lkas_fatal_error" 1 "no_torque_alert_1" 0 "normal";
 VAL_ 401 GEAR_SHIFTER 32 "L" 16 "S" 8 "D" 4 "N" 2 "R" 1 "P" ;
 CM_ "CHFFR_METRIC 342 STEER_ANGLE STEER_ANGLE 0.36 180; CHFFR_METRIC 380 ENGINE_RPM ENGINE_RPM 1 0; CHFFR_METRIC 804 ENGINE_TEMPERATURE ENGINE_TEMPERATURE 1 0";
