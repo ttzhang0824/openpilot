@@ -157,7 +157,6 @@ class CarController():
         self.apply_steer_over_max_counter = 0
     else:
       self.apply_steer_over_max_counter = 0
-    lkas_active = enabled and not CS.steer_not_allowed
     
     # Send CAN commands.
     can_sends = []
