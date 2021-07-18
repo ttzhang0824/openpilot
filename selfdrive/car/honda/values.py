@@ -57,6 +57,7 @@ class CAR:
   PILOT_2018 = "HONDA PILOT 2018 ELITE"
   PILOT_2019 = "HONDA PILOT 2019 ELITE"
   RIDGELINE = "HONDA RIDGELINE 2017 BLACK EDITION"
+  ACURA_MDX = "ACURA MDX 2018 STANDARD"
   
   '''
   # Removed Accord Hybrid because of conflict with Insight
@@ -180,6 +181,9 @@ FINGERPRINTS = {
   # 2019 Insight
   CAR.INSIGHT: [{
     57: 3, 148: 8, 228: 5, 304: 8, 330: 8, 344: 8, 380: 8, 387: 8, 388: 8, 399: 7, 419: 8, 420: 8, 427: 3, 432: 7, 441: 5, 450: 8, 464: 8, 476: 8, 477: 8, 479: 8, 490: 8, 495: 8, 507: 1, 525: 8, 531: 8, 545: 6, 547: 6, 597: 8, 662: 4, 773: 7, 777: 8, 780: 8, 795: 8, 804: 8, 806: 8, 808: 8, 814: 4, 815: 8, 829: 5, 832: 3, 862: 8, 884: 8, 891: 8, 927: 8, 929: 8, 954: 2, 985: 3, 1029: 8, 1093: 4, 1115: 2, 1302: 8, 1361: 5, 1365: 5, 1600: 5, 1601: 8, 1652: 8, 2015: 3
+  }],
+  CAR.ACURA_MDX: [{
+    57: 3, 145: 8, 308: 5, 316: 8, 334: 8, 342: 6, 344: 8, 379: 8, 380: 8, 398: 3, 411: 5, 419: 8, 420: 8, 422: 8, 425: 8, 426: 8, 432: 7, 450: 8, 463: 8, 464: 8, 476: 4, 487: 4, 490: 8, 506: 8, 521: 8, 542: 7, 545: 5, 546: 3, 597: 8, 660: 8, 773: 7, 777: 8, 780: 8, 800: 8, 804: 8, 808: 8, 819: 7, 821: 5, 825: 4, 829: 5, 837: 5, 856: 7, 871: 8, 881: 8, 882: 2, 884: 7, 891: 8, 892: 8, 918: 7, 923: 2, 927: 8, 929: 8, 983: 8, 985: 3, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1064: 7, 1070: 8, 1088: 8, 1089: 8, 1092: 1, 1108: 8, 1110: 8, 1125: 8, 1137: 8, 1296: 8, 1348: 5, 1600: 5, 1601: 8, 1612: 5, 1614: 5, 1615: 8, 1618: 5, 1665: 5
   }]
 }
 
@@ -1148,6 +1152,32 @@ FW_VERSIONS = {
       b'78109-T3R-A410\x00\x00',
     ],
   },
+  CAR.ACURA_MDX: {
+    (Ecu.programmedFuelInjection, 0x18da10f1, None): [
+      b'37805-5BN-3070\000\000',
+    ],
+    (Ecu.fwdRadar, 0x18dab0f1, None): [
+      b'36161-TZ6-A340\000\000',
+    ],
+    (Ecu.gateway, 0x18daeff1, None): [
+      b'38897-TZ5-A110\000\000',
+    ],
+    (Ecu.vsa, 0x18da28f1, None): [
+      b'57114-TZ6-A810\000\000',
+    ],
+    (Ecu.transmission, 0x18da1ef1, None): [
+      b'28101-5DH-A110\000\000',
+    ],
+    (Ecu.shiftByWire, 0x18da0bf1, None): [
+      b'54008-TZ5-A910\000\000',
+    ],
+    (Ecu.combinationMeter, 0x18da60f1, None): [
+      b'78109-TYS-A020\000\000',
+    ],
+    (Ecu.srs, 0x18da53f1, None): [
+      b'77959-TZ5-A220\000\000',
+    ],
+  },
 }
 
 DBC = {
@@ -1175,6 +1205,7 @@ DBC = {
   CAR.RIDGELINE: dbc_dict('honda_ridgeline_black_edition_2017_can_generated', 'acura_ilx_2016_nidec'),
   CAR.INSIGHT: dbc_dict('honda_insight_ex_2019_can_generated', None),
   CAR.ACURA_MDX_HYBRID: dbc_dict('acura_mdx_2018_hybrid', 'acura_ilx_2016_nidec'),
+  CAR.ACURA_MDX: dbc_dict('acura_mdx_2018', 'acura_ilx_2016_nidec'),  # NEED TO FIND THIS OUT- HOW DOES THIS LOOK COMPARED TO THE PILOT?
 }
 
 STEER_THRESHOLD = {
@@ -1202,6 +1233,7 @@ STEER_THRESHOLD = {
   CAR.RIDGELINE: 1200,
   CAR.INSIGHT: 1200,
   CAR.ACURA_MDX_HYBRID: 25,
+  CAR.ACURA_MDX: 25,  
 }
 
 SPEED_FACTOR = {
@@ -1229,6 +1261,7 @@ SPEED_FACTOR = {
   CAR.RIDGELINE: 1.,
   CAR.INSIGHT: 1.,
   CAR.ACURA_MDX_HYBRID: 1.,
+  CAR.ACURA_MDX: 1.,
 }
 
 # msgs sent for steering controller by camera module on can 0.
@@ -1238,4 +1271,4 @@ ECU_FINGERPRINT = {
 }
 
 HONDA_BOSCH = set([CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_5G, CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G])
-HONDA_NIDEC_SERIAL_STEERING = set([CAR.ACCORD_NIDEC_SS, CAR.ACURA_MDX_HYBRID])
+HONDA_NIDEC_SERIAL_STEERING = set([CAR.ACCORD_NIDEC_SS,CAR.ACURA_MDX])

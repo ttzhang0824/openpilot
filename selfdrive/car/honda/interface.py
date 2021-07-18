@@ -476,6 +476,22 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
       ret.longitudinalTuning.kiBP = [0., 35.]
       ret.longitudinalTuning.kiV = [0.18, 0.12]
+      
+    elif candidate == CAR.ACURA_MDX:
+      stop_and_go = False
+      ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
+      ret.wheelbase = 2.82
+      ret.centerToFront = ret.wheelbase * 0.428
+      ret.steerRatio = 15.66  # as spec
+      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 240], [0, 240]]  # TODO: determine if there is a dead zone at the top end
+      tire_stiffness_factor = 0.444
+      ret.steerActuatorDelay = 0.3
+      ret.lateralTuning.pid.kf = 0.000040
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
+      ret.longitudinalTuning.kpBP = [0., 5., 35.]
+      ret.longitudinalTuning.kpV = [1.2, 0.8,0.5]
+      ret.longitudinalTuning.kiBP = [0., 35.]
+      ret.longitudinalTuning.kiV = [0.18, 0.12]
 
     else:
       raise ValueError("unsupported car %s" % candidate)
@@ -500,9 +516,10 @@ class CarInterface(CarInterfaceBase):
     ret.brakeMaxV = [1., 0.8]   # max brake allowed
 
     ret.stoppingControl = True
-    ret.startAccel = 0.5
-
-    ret.steerActuatorDelay = 0.1
+    ret.startAccel = 0.15
+    #Remove global since I am not sure it will over write
+    
+    #ret.steerActuatorDelay = 0.1
     ret.steerLimitTimer = 0.8
 
     return ret

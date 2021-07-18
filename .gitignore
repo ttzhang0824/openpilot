@@ -73,3 +73,5 @@ comma*.sh
 
 selfdrive/modeld/thneed/compile
 models/*.thneed
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
