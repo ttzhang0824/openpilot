@@ -250,11 +250,11 @@ class CarState(CarStateBase):
       steer_status = 'NORMAL'
     else:
       steer_status = self.steer_status_values[cp.vl["STEER_STATUS"]['STEER_STATUS']]
-    ret.steerError = steer_status not in ['NORMAL', 'NO_TORQUE_ALERT_1', 'NO_TORQUE_ALERT_2', 'LOW_SPEED_LOCKOUT', 'TMP_FAULT']
-    # NO_TORQUE_ALERT_2 can be caused by bump OR steering nudge from driver
-    self.steer_not_allowed = steer_status not in ['NORMAL', 'NO_TORQUE_ALERT_2']
-    # LOW_SPEED_LOCKOUT is not worth a warning
-    ret.steerWarning = steer_status not in ['NORMAL', 'LOW_SPEED_LOCKOUT', 'NO_TORQUE_ALERT_2']
+      ret.steerError = steer_status not in ['NORMAL', 'NO_TORQUE_ALERT_1', 'NO_TORQUE_ALERT_2', 'LOW_SPEED_LOCKOUT', 'TMP_FAULT']
+      # NO_TORQUE_ALERT_2 can be caused by bump OR steering nudge from driver
+      self.steer_not_allowed = steer_status not in ['NORMAL', 'NO_TORQUE_ALERT_2']
+      # LOW_SPEED_LOCKOUT is not worth a warning
+      ret.steerWarning = steer_status not in ['NORMAL', 'LOW_SPEED_LOCKOUT', 'NO_TORQUE_ALERT_2']
 
     if not self.CP.openpilotLongitudinalControl:
       self.brake_error = 0
@@ -323,7 +323,7 @@ class CarState(CarStateBase):
       ret.steeringTorqueEps = cp.vl["STEER_MOTOR_TORQUE"]['MOTOR_TORQUE']
 
     if self.CP.carFingerprint in (HONDA_NIDEC_SERIAL_STEERING):
-      self.steer_not_allowed = bool(abs(ret.steeringTorque) > 75)
+      self.steer_not_allowed = bool(abs(ret.steeringTorque) > 95)
 
     ret.steeringPressed = abs(ret.steeringTorque) > STEER_THRESHOLD[self.CP.carFingerprint]
 
