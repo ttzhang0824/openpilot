@@ -344,6 +344,11 @@ VAL_ 419 GEAR_SHIFTER 32 "D" 8 "R" 4 "P" ;
 VAL_ 422 CRUISE_BUTTONS 7 "tbd" 6 "tbd" 5 "tbd" 4 "accel_res" 3 "decel_set" 2 "cancel" 1 "main" 0 "none" ;
 VAL_ 422 LIGHTS_SETTING 3 "high_beam" 2 "low_beam" 1 "position" 0 "no_lights" ;
 VAL_ 422 CRUISE_SETTING 3 "distance_adj" 2 "tbd" 1 "lkas_button" 0 "none" ;
+
+VAL_ 399 STEER_STATUS 6 "tmp_fault" 5 "fault_1" 4 "no_torque_alert_2" 3 "low_speed_lockout" 2 "no_torque_alert_1" 0 "normal" ;					
+VAL_ 399 STEER_STATUS 2 "lkas_fatal_error" 1 "no_torque_alert_1" 0 "normal";
+
+
 CM_ "file copied from 2017 Honda Pilot.  Added LIN board 228/399/427 frames... tom 210315, correct coll0412";
 CM_ "Imported file _honda_2017.dbc starts here";
 CM_ "honda_pilot_touring_2017_can.dbc starts here";

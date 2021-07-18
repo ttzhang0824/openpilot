@@ -82,12 +82,12 @@ def get_can_signals(CP):
       ("GEARBOX", 100),
     ]
 
- # if CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
- #     checks += [("STEER_MOTOR_TORQUE",100),
- #               ("STEER_STATUS",100)]
- #     signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
- #                 ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
- #                 ("STEER_STATUS", "STEER_STATUS", 0)]
+#  if CP.carFingerprint == CAR.ACURA_MDX:
+#      checks += [("STEER_MOTOR_TORQUE",100),
+#               ("STEER_STATUS",100)]
+#      signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
+#                  ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
+#                  ("STEER_STATUS", "STEER_STATUS", 0)]
   if CP.carFingerprint in HONDA_BOSCH:
     # Civic is only bosch to use the same brake message as other hondas.
     if CP.carFingerprint not in (CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT):
@@ -242,13 +242,12 @@ class CarState(CarStateBase):
       ret.standstill = not cp.vl["STANDSTILL"]['WHEELS_MOVING']
       ret.doorOpen = any([cp.vl["DOORS_STATUS"]['DOOR_OPEN_FL'], cp.vl["DOORS_STATUS"]['DOOR_OPEN_FR'],
                           cp.vl["DOORS_STATUS"]['DOOR_OPEN_RL'], cp.vl["DOORS_STATUS"]['DOOR_OPEN_RR']])
+   
     ret.seatbeltUnlatched = bool(cp.vl["SEATBELT_STATUS"]['SEATBELT_DRIVER_LAMP'] or not cp.vl["SEATBELT_STATUS"]['SEATBELT_DRIVER_LATCHED'])
 
-    if self.CP.carFingerprint in HONDA_NIDEC_SERIAL_STEERING:
-      steer_status = 1
-      ret.steerError = bool(cp_cam.vl["STEER_STATUS"]['LIN_INTERFACE_FATAL_ERROR'])
-      self.steer_not_allowed =  bool(abs(cp_cam.vl["STEER_STATUS"]['STEER_TORQUE_SENSOR']) > 95)
-      ret.steerWarning = False
+    if self.CP.carFingerprint in (HONDA_NIDEC_SERIAL_STEERING):
+     # steer_status = self.steer_status_values[cp_cam.v1["STEER_STATUS"]['STEER_STATUS']]
+      steer_status = 'NORMAL'
     else:
       steer_status = self.steer_status_values[cp.vl["STEER_STATUS"]['STEER_STATUS']]
     ret.steerError = steer_status not in ['NORMAL', 'NO_TORQUE_ALERT_1', 'NO_TORQUE_ALERT_2', 'LOW_SPEED_LOCKOUT', 'TMP_FAULT']
@@ -316,7 +315,7 @@ class CarState(CarStateBase):
     else:
       ret.gasPressed = self.pedal_gas > 1e-5
 
-    if self.CP.carFingerprint in HONDA_NIDEC_SERIAL_STEERING:
+    if self.CP.carFingerprint in (HONDA_NIDEC_SERIAL_STEERING):
       ret.steeringTorque = cp_cam.vl["STEER_STATUS"]['STEER_TORQUE_SENSOR']
       ret.steeringTorqueEps = cp_cam.vl["STEER_MOTOR_TORQUE"]['MOTOR_TORQUE']
     else:
@@ -447,12 +446,13 @@ class CarState(CarStateBase):
     if CP.carFingerprint in [CAR.CRV, CAR.CRV_EU, CAR.ACURA_RDX, CAR.ODYSSEY_CHN]:
       checks = [(0x194, 100)]
 
-   if CP.carFingerprint in HONDA_NIDEC_SERIAL_STEERING:
-      checks = [("STEER_MOTOR_TORQUE",0),
-                ("STEER_STATUS",0)]
-      signals += [("LIN_INTERFACE_FATAL_ERROR", "STEER_STATUS", 0),
+    if CP.carFingerprint in (HONDA_NIDEC_SERIAL_STEERING):
+        checks = [("STEER_MOTOR_TORQUE",100),
+                ("STEER_STATUS",100)]
+        signals += [("LIN_INTERFACE_FATAL_ERROR", "STEER_STATUS", 0),
                   ("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0)]
+
     if CP.carFingerprint in (CAR.ACURA_MDX_HYBRID):
       checks = []
 
