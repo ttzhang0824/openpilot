@@ -71,6 +71,19 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       "In this mode openpilot will ignore lanelines and just drive how it thinks a human would.",
       "../assets/offroad/icon_road.png",
     },
+    {
+      "DisableRadar",
+      "openpilot Longitudinal Control",
+      "openpilot will disable the car's radar and will take over control of gas and brakes. Warning: this disables AEB!",
+      "../assets/offroad/icon_speed_limit.png",
+    }, 
+    {
+      "ACCdoesLKAS"
+      "Honda/Acura: Pressing SET/RES also enables LKAS",
+      "This change behaves more like stock openpilot where you can use one button to enable everything. Note that once LKAS is on, it will remain on standby until manually disabled or the vehicle is shut off.",
+      "../assets/offroad/icon_openpilot.png",
+    },
+
 #ifdef ENABLE_MAPS
     {
       "NavSettingTime24h",
@@ -84,14 +97,14 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
 
   Params params;
 
-  if (params.getBool("DisableRadar_Allow")) {
-    toggles.push_back({
-      "DisableRadar",
-      "openpilot Longitudinal Control",
-      "openpilot will disable the car's radar and will take over control of gas and brakes. Warning: this disables AEB!",
-      "../assets/offroad/icon_speed_limit.png",
-    });
-  }
+  //if (params.getBool("DisableRadar_Allow")) {
+    //toggles.push_back({
+      //"DisableRadar",
+      //"openpilot Longitudinal Control",
+      //"openpilot will disable the car's radar and will take over control of gas and brakes. Warning: this disables AEB!",
+      //"../assets/offroad/icon_speed_limit.png",
+    //});
+  //}
 
   for (auto &[param, title, desc, icon] : toggles) {
     auto toggle = new ParamControl(param, title, desc, icon, this);
