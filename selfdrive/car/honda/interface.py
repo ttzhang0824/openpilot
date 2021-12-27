@@ -34,7 +34,7 @@ class CarInterface(CarInterfaceBase):
       if CP.enableGasInterceptor:
         ACCEL_MAX_VALS = [CarControllerParams.NIDEC_ACCEL_MAX, 0.2]
         ACCEL_MAX_BP = [cruise_speed - 2., cruise_speed - .2]
-        return CarControllerParams.NIDEC_ACCEL_MIN, CarControllerParams.NIDEC_ACCEL_MAX)
+        return CarControllerParams.NIDEC_ACCEL_MIN, CarControllerParams.NIDEC_ACCEL_MAX
       else:
         ACCEL_MAX_VALS = [CarControllerParams.NIDEC_ACCEL_MAX, 0.2]
         ACCEL_MAX_BP = [cruise_speed - 2., cruise_speed - .2]
