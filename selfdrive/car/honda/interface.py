@@ -87,7 +87,7 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalActuatorDelayUpperBound = 0.5 # s
     else:
       # default longitudinal tuning for all hondas
-      if not CP.enableGasInterceptor:
+      if not ret.enableGasInterceptor:
         ret.longitudinalTuning.kpBP = [0., 5., 35.]
         ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
         ret.longitudinalTuning.kiBP = [0., 35.]
