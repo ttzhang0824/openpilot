@@ -78,9 +78,15 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       "../assets/offroad/icon_speed_limit.png",
     }, 
     {
-      "ACCdoesLKAS"
-      "Honda/Acura: Pressing SET/RES also enables LKAS",
+      "ACCdoesLKAS",
+      "Honda: SET enables LKAS",
       "This change behaves more like stock openpilot where you can use one button to enable everything. Note that once LKAS is on, it will remain on standby until manually disabled or the vehicle is shut off.",
+      "../assets/offroad/icon_openpilot.png",
+    },
+    {
+      "NudgelessALC",
+      "Nudgeless Automatic Lane Change",
+      "When above 30mph or 48km/h, openpilot will attempt a lane change when the blinkers are activated instead of waiting for the driver to nudge the wheel. Be cautious when using this feature.",
       "../assets/offroad/icon_openpilot.png",
     },
 
