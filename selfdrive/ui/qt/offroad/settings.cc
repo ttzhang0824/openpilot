@@ -89,6 +89,11 @@ TogglesPanel::TogglesPanel(SettingsWindow *parent) : ListWidget(parent) {
       "When above 30mph or 48km/h, openpilot will attempt a lane change when the blinkers are activated instead of waiting for the driver to nudge the wheel. Be cautious when using this feature.",
       "../assets/offroad/icon_openpilot.png",
     },
+      "HigherMaxAccel",
+      "Higher Accel Limit",
+      "Cruise tuned to allow a bit more acceleration than stock.",
+      "../assets/offroad/icon_openpilot.png",
+    },
 
 #ifdef ENABLE_MAPS
     {
