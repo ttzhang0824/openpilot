@@ -44,7 +44,6 @@ def scale_tire_stiffness(mass, wheelbase, center_to_front, tire_stiffness_factor
 def dbc_dict(pt_dbc, radar_dbc, chassis_dbc=None, body_dbc=None):
   return {'pt': pt_dbc, 'radar': radar_dbc, 'chassis': chassis_dbc, 'body': body_dbc}
 
-
 def apply_std_steer_torque_limits(apply_torque, apply_torque_last, driver_torque, LIMITS):
 
   # limits due to driver torque
