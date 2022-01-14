@@ -44,6 +44,7 @@ class HondaFlags(IntFlag):
   BOSCH_EXT_HUD = 1
 
 class LKAS_LIMITS:
+  STEER_MAX = 238
   STEER_THRESHOLD = 15
   STEER_DELTA_UP = 7
   STEER_DELTA_DOWN = 14
