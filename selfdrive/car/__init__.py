@@ -49,14 +49,15 @@ def apply_std_steer_torque_limits(apply_torque, apply_torque_last, driver_torque
   # limits due to driver torque
   driver_max_torque = LIMITS.STEER_MAX + (LIMITS.STEER_DRIVER_ALLOWANCE + driver_torque * LIMITS.STEER_DRIVER_FACTOR) * LIMITS.STEER_DRIVER_MULTIPLIER
   driver_min_torque = -LIMITS.STEER_MAX + (-LIMITS.STEER_DRIVER_ALLOWANCE + driver_torque * LIMITS.STEER_DRIVER_FACTOR) * LIMITS.STEER_DRIVER_MULTIPLIER
-  if ss==True:
-    min_torque = min(abs(driver_max_torque), abs(driver_min_torque))
-    driver_max_torque = min_torque
-    driver_min_torque = -min_torque
   max_steer_allowed = max(min(LIMITS.STEER_MAX, driver_max_torque), 0)
   min_steer_allowed = min(max(-LIMITS.STEER_MAX, driver_min_torque), 0)
+  if ss==True:
+    min_torque = min(abs(max_steer_allowed), abs(min_steer_allowed))
+    max_steer_allowed = min_torque
+    min_steer_allowed = -min_torque
+  #print(f"Max Steer Allowed: {max_steer_allowed} Min Steer Allowed: {min_steer_allowed}")
   apply_torque = clip(apply_torque, min_steer_allowed, max_steer_allowed)
-  
+  #print(f"max_steer_allowed: {max_steer_allowed}, min_steer_allow {min_steer_allowed}, apply_steer: {apply_torque}, driver_torque:{driver_torque}, apply_torque_last = {apply_torque_last} ss= {ss}")
 
   # slow rate if steer torque increases in magnitude
   if apply_torque_last > 0:
