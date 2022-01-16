@@ -316,11 +316,11 @@ class opParams:
 SHOW_INDI_PARAMS = 'show_indi_params'
 ENABLE_INDI_BREAKPOINTS = 'enable_indi_breakpoints'
 
-LAT_KP_BP = 'lat_pid_kp_bp'
-LAT_KP_V = 'lat_pid_kp_v'
-LAT_KI_BP = 'lat_pid_ki_bp'
-LAT_KI_V = 'lat_pid_ki_v'
-LAT_KF = 'lat_pid_kf'
+LAT_KP_BP = 'lat_kp_bp'
+LAT_KP_V = 'lat_kp_v'
+LAT_KI_BP = 'lat_ki_bp'
+LAT_KI_V = 'lat_ki_v'
+LAT_KF = 'lat_kf'
 
 SHOW_RATE_PARAMS = 'show_rate_params'
 ENABLE_RATE_PARAMS = 'enable_rate_params'

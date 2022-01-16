@@ -120,9 +120,9 @@ class CarController():
              hud_v_cruise, hud_show_lanes, hud_show_car, hud_alert):
 
     P = self.params
-    self.LKAS_LIMITS.STEER_DELTA_UP = self.op_params.get(STOCK_DELTA_UP)
-    self.LKAS_LIMITS.STEER_DELTA_DOWN = self.op_params.get(STOCK_DELTA_DOWN)
-    self.LKAS_LIMITS.STEER_MAX = self.op_params.get(STOCK_STEER_MAX)
+    LKAS_LIMITS.STEER_DELTA_UP = self.op_params.get(STOCK_DELTA_UP)
+    LKAS_LIMITS.STEER_DELTA_DOWN = self.op_params.get(STOCK_DELTA_DOWN)
+    LKAS_LIMITS.STEER_MAX = self.op_params.get(STOCK_STEER_MAX)
     if enabled:
       accel = actuators.accel
       gas, brake = compute_gas_brake(actuators.accel, CS.out.vEgo, CS.CP.carFingerprint)
