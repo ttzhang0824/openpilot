@@ -113,7 +113,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     signals += [("DRIVERS_DOOR_OPEN", "SCM_BUTTONS"),
                 ("WHEELS_MOVING", "STANDSTILL")]
   elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
-    signals.append(("WHEELS_MOVING", "STANDSTILL", 1))
+    signals.append(("WHEELS_MOVING", "STANDSTILL"))
   else:
     signals += [("DOOR_OPEN_FL", "DOORS_STATUS"),
                 ("DOOR_OPEN_FR", "DOORS_STATUS"),
@@ -135,15 +135,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
   elif CP.carFingerprint in (CAR.ODYSSEY, CAR.ODYSSEY_CHN):
     signals.append(("EPB_STATE", "EPB_STATUS"))
     checks.append(("EPB_STATUS", 50))
-  elif CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.V6ACCORD_NIDEC):
-    signals += [("MAIN_ON", "SCM_BUTTONS", 0),
-                ("CAR_GAS", "GAS_PEDAL", 0)]
-    checks.append(("GAS_PEDAL", 100))
-  elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
-    signals += [("MAIN_ON", "SCM_BUTTONS", 0),
-                ("CAR_GAS", "GAS_PEDAL", 0)] #WHY ISNT THIS HERE? 
-    checks += (("GAS_PEDAL", 0))
-  # add gas interceptor reading if we are using it
+    
   if CP.enableGasInterceptor:
     signals.append(("INTERCEPTOR_GAS", "GAS_SENSOR"))
     signals.append(("INTERCEPTOR_GAS2", "GAS_SENSOR"))
@@ -210,7 +202,10 @@ class CarState(CarStateBase):
                           cp.vl["DOORS_STATUS"]["DOOR_OPEN_RL"], cp.vl["DOORS_STATUS"]["DOOR_OPEN_RR"]])
     ret.seatbeltUnlatched = bool(cp.vl["SEATBELT_STATUS"]["SEATBELT_DRIVER_LAMP"] or not cp.vl["SEATBELT_STATUS"]["SEATBELT_DRIVER_LATCHED"])
 
-    steer_status = self.steer_status_values[cp.vl["STEER_STATUS"]["STEER_STATUS"]]
+    if self.CP.carFingerprint in SERIAL_STEERING:
+      steer_status = self.steer_status_values[cp_cam.vl["STEER_STATUS"]['STEER_STATUS']]
+    else:
+      steer_status = self.steer_status_values[cp.vl["STEER_STATUS"]["STEER_STATUS"]]
     ret.steerError = steer_status not in ("NORMAL", "NO_TORQUE_ALERT_1", "NO_TORQUE_ALERT_2", "LOW_SPEED_LOCKOUT", "TMP_FAULT")
     # NO_TORQUE_ALERT_2 can be caused by bump OR steering nudge from driver
     self.steer_not_allowed = steer_status not in ("NORMAL", "NO_TORQUE_ALERT_2")
@@ -295,7 +290,7 @@ class CarState(CarStateBase):
 
     ret.brake = cp.vl["VSA_STATUS"]["USER_BRAKE"]
     ret.cruiseState.enabled = cp.vl["POWERTRAIN_DATA"]["ACC_STATUS"] != 0
-    ret.cruiseState.available = bool(cp.vl[self.main_on_sig_msg]["MAIN_ON"])
+    ret.cruiseState.available = True#bool(cp.vl[self.main_on_sig_msg]["MAIN_ON"])
 
     # Gets rid of Pedal Grinding noise when brake is pressed at slow speeds for some models
     if self.CP.carFingerprint in (CAR.PILOT, CAR.PASSPORT, CAR.RIDGELINE):
@@ -334,6 +329,7 @@ class CarState(CarStateBase):
   def get_can_parser(self, CP):
     signals, checks = get_can_signals(CP, self.gearbox_msg, self.main_on_sig_msg)
     bus_pt = 1 if CP.carFingerprint in HONDA_BOSCH else 0
+    print(f"Signals: {signals} \n Checks: {checks} \n Gearbox: {self.gearbox_msg} \n Main: {self.main_on_sig_msg}")
     return CANParser(DBC[CP.carFingerprint]["pt"], signals, checks, bus_pt)
 
   @staticmethod
@@ -346,9 +342,9 @@ class CarState(CarStateBase):
     if CP.carFingerprint in SERIAL_STEERING:
       checks = [("STEER_MOTOR_TORQUE", 100), 
                 ("STEER_STATUS", 100)]
-      signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
-                  ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
-                  ("STEER_STATUS", "STEER_STATUS", 0)]
+      signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
+                  ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
+                  ("STEER_STATUS", "STEER_STATUS")]
     if CP.carFingerprint not in HONDA_BOSCH:
       signals += [("COMPUTER_BRAKE", "BRAKE_COMMAND"),
                   ("AEB_REQ_1", "BRAKE_COMMAND"),
