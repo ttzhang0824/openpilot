@@ -380,8 +380,8 @@ class CarState(CarStateBase):
     #TODO REMOVE THIS OR NOT????
     if self.CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC):
       self.steer_not_allowed = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_not_allowed
-      self.steer_torque_limited = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_torque_limited
-
+      #self.steer_torque_limited = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_torque_limited
+      self.steer_not_allowed = True if (ret.vEgo < (10 * CV.MPH_TO_MS)) else self.steer_not_allowed
     # TODO: discover the CAN msg that has the imperial unit bit for all other cars
     if self.CP.carFingerprint in (CAR.CIVIC, ):
       self.is_metric = not cp.vl["HUD_SETTING"]["IMPERIAL_UNIT"]
