@@ -377,10 +377,10 @@ class CarState(CarStateBase):
       if (self.automaticLaneChange and not self.belowLaneChangeSpeed and (self.rightBlinkerOn or self.leftBlinkerOn)) or not (self.rightBlinkerOn or self.leftBlinkerOn):
         ret.steerWarning = steer_status not in ["NORMAL", "LOW_SPEED_LOCKOUT", "NO_TORQUE_ALERT_2"]
 
-    #TODO REMOVE THIS
-#    if self.CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC):
-#      self.steer_not_allowed = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_not_allowed
-#      self.steer_torque_limited = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_torque_limited
+    #TODO REMOVE THIS OR NOT????
+    if self.CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC):
+      self.steer_not_allowed = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_not_allowed
+      self.steer_torque_limited = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_torque_limited
 
     # TODO: discover the CAN msg that has the imperial unit bit for all other cars
     if self.CP.carFingerprint in (CAR.CIVIC, ):
