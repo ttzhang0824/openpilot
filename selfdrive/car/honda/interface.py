@@ -253,7 +253,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kf = 0.000040
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
 
-  elif candidate == CAR.ACURA_MDX:
+    elif candidate == CAR.ACURA_MDX:
         stop_and_go = True
         ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
         ret.wheelbase = 2.82
