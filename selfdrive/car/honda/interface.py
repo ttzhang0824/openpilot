@@ -236,7 +236,7 @@ class CarInterface(CarInterfaceBase):
       ret.centerToFront = ret.wheelbase * 0.39
       ret.steerRatio = 13.66 # 13.37 is spec
       ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 239], [0, 239]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.25], [0.06]]      
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.25], [0.06]]
       ret.lateralTuning.pid.kf = 2e-8
       tire_stiffness_factor = 0.8467
       ret.steerActuatorDelay - 0.425
@@ -252,6 +252,18 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.3
       ret.lateralTuning.pid.kf = 0.000040
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
+
+  elif candidate == CAR.ACURA_MDX:
+        stop_and_go = True
+        ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
+        ret.wheelbase = 2.82
+        ret.centerToFront = ret.wheelbase * 0.428
+        ret.steerRatio = 15.66  # as spec
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 238], [0, 238]]  # TODO: determine if there is a dead zone at the top end
+        tire_stiffness_factor = 0.444
+        ret.steerActuatorDelay = 0.3
+        ret.lateralTuning.pid.kf = 0.000035
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
 
     elif candidate == CAR.ODYSSEY:
       stop_and_go = False
