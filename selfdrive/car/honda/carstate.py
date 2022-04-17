@@ -66,7 +66,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
       ("SCM_BUTTONS", 25),
     ]
 
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX_HYBRID):
+  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
     checks.append((gearbox_msg, 50))
   else:
     checks.append((gearbox_msg, 100))
@@ -135,7 +135,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
   elif CP.carFingerprint in (CAR.ODYSSEY, CAR.ODYSSEY_CHN):
     signals.append(("EPB_STATE", "EPB_STATUS"))
     checks.append(("EPB_STATUS", 50))
-    
+
   if CP.enableGasInterceptor:
     signals.append(("INTERCEPTOR_GAS", "GAS_SENSOR"))
     signals.append(("INTERCEPTOR_GAS2", "GAS_SENSOR"))
@@ -340,7 +340,7 @@ class CarState(CarStateBase):
     ]
 
     if CP.carFingerprint in SERIAL_STEERING:
-      checks = [("STEER_MOTOR_TORQUE", 100), 
+      checks = [("STEER_MOTOR_TORQUE", 100),
                 ("STEER_STATUS", 100)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS"),

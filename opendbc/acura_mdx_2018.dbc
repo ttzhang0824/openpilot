@@ -70,7 +70,7 @@ BO_ 420 VSA_STATUS: 8 VSA
 BO_ 427 STEER_MOTOR_TORQUE: 3 EPS
  SG_ COUNTER : 21|2@0+ (1,0) [0|3] "" EON
  SG_ CHECKSUM : 19|4@0+ (1,0) [0|15] "" EON
- SG_ MOTOR_TORQUE : 0|10@1- (1,0) [-512|512] "" XXX
+ SG_ MOTOR_TORQUE : 7|8@0- (1,0) [-512|512] "" XXX
  SG_ LIN_EPS_B0_O6 : 22|1@0+ (1,0) [0|1] "" XXX
  SG_ LIN_EPS_B1_O6 : 23|1@0+ (1,0) [0|1] "" XXX
  SG_ EPS_LKAS_ON : 11|1@0+ (1,0) [0|1] "" XXX
@@ -348,3 +348,6 @@ CM_ "file copied from 2017 Honda Pilot.  Added LIN board 228/399/427 frames... t
 CM_ "Imported file _honda_2017.dbc starts here";
 CM_ "honda_pilot_touring_2017_can.dbc starts here";
 CM_ "CHFFR_METRIC 342 STEER_ANGLE STEER_ANGLE 0.36 180; CHFFR_METRIC 380 ENGINE_RPM ENGINE_RPM 1 0; CHFFR_METRIC 804 ENGINE_TEMPERATURE ENGINE_TEMPERATURE 1 0";
+
+VAL_ 399 STEER_STATUS 6 "tmp_fault" 5 "fault_1" 4 "no_torque_alert_2" 3 "low_speed_lockout" 2 "no_torque_alert_1" 0 "normal" ;
+VAL_ 399 STEER_STATUS 2 "lkas_fatal_error" 1 "no_torque_alert_1" 0 "normal";
