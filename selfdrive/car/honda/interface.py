@@ -255,7 +255,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.pid.kf = 0.000025
       tire_stiffness_factor = 0.8467
 
-  elif candidate in (CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
+    elif candidate in (CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
       stop_and_go = False
       ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
       ret.wheelbase = 2.82
