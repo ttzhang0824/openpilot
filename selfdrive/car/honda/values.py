@@ -81,7 +81,8 @@ class CAR:
   ACCORD_NIDEC = "HONDA ACCORD 2016-17 SERIAL STEERING"
   V6ACCORD_NIDEC = "HONDA ACCORD V6 SERIAL STEERING"
   ACCORD_NIDEC_HYBRID = "HONDA ACCORD HYBRID 2016-17 SERIAL STEERING"
-  ACURA_MDX_HYBRID = "ACURA MDX HYBRID SERIAL STEERING"             
+  ACURA_MDX_HYBRID = "ACURA MDX HYBRID SERIAL STEERING"
+  ACURA_MDX = "ACURA MDX 2018 STANDARD"
   CIVIC = "HONDA CIVIC 2016"
   CIVIC_BOSCH = "HONDA CIVIC (BOSCH) 2019"
   CIVIC_BOSCH_DIESEL = "HONDA CIVIC SEDAN 1.6 DIESEL 2019"
@@ -328,7 +329,7 @@ FW_VERSIONS = {
     (Ecu.srs, 0x18DA53F1, None): [
       b'77959-T2F-A030\x00\x00',
     ],
-  }, 
+  },
   CAR.V6ACCORD_NIDEC: {
     (Ecu.vsa, 0x18DA28F1, None): [
       b'57114-T3M-X840\x00\x00',
@@ -342,7 +343,7 @@ FW_VERSIONS = {
     (Ecu.srs, 0x18DA53F1, None): [
       b'77959-T3L-C030\x00\x00',
     ],
-  }, 
+  },
   CAR.V6ACCORD_NIDEC: {
     (Ecu.vsa, 0x18DA28F1, None): [
       b'57114-T3M-X840\x00\x00',
@@ -356,7 +357,7 @@ FW_VERSIONS = {
     (Ecu.srs, 0x18DA53F1, None): [
       b'77959-T3L-C030\x00\x00',
     ],
-  }, 
+  },
   CAR.ACCORD_NIDEC_HYBRID: {
     (Ecu.gateway, 0x18DAEFF1, None): [
       b'38897-T3W-0130\x00\x00',
@@ -1223,6 +1224,32 @@ FW_VERSIONS = {
       b'78109-TX4-A310\x00\x00',
     ],
   },
+  CAR.ACURA_MDX: {
+    (Ecu.programmedFuelInjection, 0x18da10f1, None): [
+      b'37805-5BN-3070\x00\x00',
+    ],
+    (Ecu.fwdRadar, 0x18dab0f1, None): [
+      b'36161-TZ6-A340\x00\x00',
+    ],
+    (Ecu.gateway, 0x18daeff1, None): [
+      b'38897-TZ5-A110\x00\x00',
+    ],
+    (Ecu.vsa, 0x18da28f1, None): [
+      b'57114-TZ6-A810\x00\x00',
+    ],
+    (Ecu.transmission, 0x18da1ef1, None): [
+      b'28101-5DH-A110\x00\x00',
+    ],
+    (Ecu.shiftByWire, 0x18da0bf1, None): [
+      b'54008-TZ5-A910\x00\x00',
+    ],
+    (Ecu.combinationMeter, 0x18da60f1, None): [
+      b'78109-TYS-A020\x00\x00',
+    ],
+    (Ecu.srs, 0x18da53f1, None): [
+      b'77959-TZ5-A220\x00\x00',
+    ],
+  },
   CAR.ACURA_RDX_3G: {
     (Ecu.programmedFuelInjection, 0x18da10f1, None): [
       b'37805-5YF-A130\x00\x00',
@@ -1442,10 +1469,11 @@ FW_VERSIONS = {
 DBC = {
   CAR.ACCORD: dbc_dict('honda_accord_2018_can_generated', None),
   CAR.ACCORDH: dbc_dict('honda_accord_2018_can_generated', None),
-  CAR.ACCORD_NIDEC: dbc_dict('honda_accord_touring_2016_can', 'acura_ilx_2016_nidec'),  
-  CAR.V6ACCORD_NIDEC: dbc_dict('honda_accord_touring_V6_2016_can', 'acura_ilx_2016_nidec'),  
+  CAR.ACCORD_NIDEC: dbc_dict('honda_accord_touring_2016_can', 'acura_ilx_2016_nidec'),
+  CAR.V6ACCORD_NIDEC: dbc_dict('honda_accord_touring_V6_2016_can', 'acura_ilx_2016_nidec'),
   CAR.ACCORD_NIDEC_HYBRID: dbc_dict('honda_accord_touring_hybrid_2017_can', 'acura_ilx_2016_nidec'),
   CAR.ACURA_MDX_HYBRID: dbc_dict('acura_mdx_2018_hybrid', 'acura_ilx_2016_nidec'),
+  CAR.ACURA_MDX: dbc_dict('acura_mdx_2018', 'acura_ilx_2016_nidec'),
   CAR.ACURA_ILX: dbc_dict('acura_ilx_2016_can_generated', 'acura_ilx_2016_nidec'),
   CAR.ACURA_RDX: dbc_dict('acura_rdx_2018_can_generated', 'acura_ilx_2016_nidec'),
   CAR.ACURA_RDX_3G: dbc_dict('acura_rdx_2020_can_generated', None),
@@ -1475,14 +1503,15 @@ STEER_THRESHOLD = {
   CAR.V6ACCORD_NIDEC: 25,
   CAR.ACCORD_NIDEC_HYBRID: 25,
   CAR.ACURA_MDX_HYBRID: 25,
+  CAR.ACURA_MDX: 25,
   CAR.ACURA_RDX: 400,
   CAR.CRV_EU: 400,
 }
 
 HONDA_NIDEC_ALT_PCM_ACCEL = set([CAR.ODYSSEY])
 HONDA_NIDEC_ALT_SCM_MESSAGES = set([CAR.ACURA_ILX, CAR.ACURA_RDX, CAR.CRV, CAR.CRV_EU, CAR.FIT, CAR.FREED, CAR.HRV, CAR.ODYSSEY_CHN,
-                                    CAR.PILOT, CAR.PILOT_2019, CAR.PASSPORT, CAR.RIDGELINE, CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.V6ACCORD_NIDEC, CAR.ACURA_MDX_HYBRID])
+                                    CAR.PILOT, CAR.PILOT_2019, CAR.PASSPORT, CAR.RIDGELINE, CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.V6ACCORD_NIDEC, CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX])
 HONDA_BOSCH = set([CAR.ACCORD, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_5G,
                    CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G, CAR.HONDA_E])
 HONDA_BOSCH_ALT_BRAKE_SIGNAL = set([CAR.ACCORD, CAR.CRV_5G, CAR.ACURA_RDX_3G])
-SERIAL_STEERING = set([CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC])
+SERIAL_STEERING = set([CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC, CAR.ACURA_MDX])

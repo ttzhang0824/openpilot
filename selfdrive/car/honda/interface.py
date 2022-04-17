@@ -23,7 +23,7 @@ class CarInterface(CarInterfaceBase):
 
     self.last_enable_pressed = 0
     self.last_enable_sent = 0
-    
+
   @staticmethod
   def get_pid_accel_limits(CP, current_speed, cruise_speed):
     if CP.carFingerprint in HONDA_BOSCH:
@@ -251,11 +251,11 @@ class CarInterface(CarInterfaceBase):
       ret.centerToFront = ret.wheelbase * 0.39
       ret.steerRatio = 13.66 # 13.37 is spec
       ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 239], [0, 239]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.28], [0.06]]      
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.28], [0.06]]
       ret.lateralTuning.pid.kf = 0.000025
       tire_stiffness_factor = 0.8467
 
-    elif candidate == CAR.ACURA_MDX_HYBRID:
+  elif candidate in (CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
       stop_and_go = False
       ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
       ret.wheelbase = 2.82
@@ -476,7 +476,7 @@ class CarInterface(CarInterfaceBase):
     if not ret.brakePressed and not ret.brakeHoldActive:
       self.CS.disengageByBrake = False
       ret.disengageByBrake = False
-    
+
     # handle button presses
     for b in ret.buttonEvents:
 

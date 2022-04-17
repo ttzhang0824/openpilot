@@ -68,7 +68,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
       ("SCM_BUTTONS", 25),
     ]
 
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX_HYBRID):
+  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
     checks += [
       (gearbox_msg, 50),
     ]
@@ -145,9 +145,9 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     signals += [("MAIN_ON", "SCM_BUTTONS", 0),
                 ("CAR_GAS", "GAS_PEDAL", 0)]
     checks += [("GAS_PEDAL", 100)]
-  elif CP.carFingerprint == CAR.ACURA_MDX_HYBRID:
+  elif CP.carFingerprint in (CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
     signals += [("MAIN_ON", "SCM_BUTTONS", 0),
-                ("CAR_GAS", "GAS_PEDAL", 0)] #WHY ISNT THIS HERE? 
+                ("CAR_GAS", "GAS_PEDAL", 0)] #WHY ISNT THIS HERE?
     checks += [("GAS_PEDAL", 0)]
   # add gas interceptor reading if we are using it
   if CP.enableGasInterceptor:
@@ -194,7 +194,7 @@ class CarState(CarStateBase):
     self.brake_switch_prev_ts = 0
     self.cruise_setting = 0
     self.v_cruise_pcm_prev = 0
-    
+
   def update(self, cp, cp_cam, cp_body):
     ret = car.CarState.new_message()
 
@@ -324,7 +324,7 @@ class CarState(CarStateBase):
     if bool(main_on):
       if not self.CP.pcmCruise:
         if self.prev_cruise_buttons == 3: #set
-          if self.cruise_buttons != 3:            
+          if self.cruise_buttons != 3:
             self.accEnabled = True
         elif self.prev_cruise_buttons == 4 and self.resumeAvailable == True: #resume
           if self.cruise_buttons != 4:
@@ -340,7 +340,7 @@ class CarState(CarStateBase):
     if (not self.CP.pcmCruise) or (self.CP.pcmCruise and self.CP.minEnableSpeed > 0):
       if self.prev_cruise_buttons != 2: #cancel
         if self.cruise_buttons == 2:
-          self.accEnabled = False   
+          self.accEnabled = False
       if ret.brakePressed:
         self.accEnabled = False
 
@@ -378,7 +378,7 @@ class CarState(CarStateBase):
         ret.steerWarning = steer_status not in ["NORMAL", "LOW_SPEED_LOCKOUT", "NO_TORQUE_ALERT_2"]
 
     #TODO REMOVE THIS OR NOT????
-    if self.CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC):
+    if self.CP.carFingerprint in (CAR.ACCORD_NIDEC, CAR.ACCORD_NIDEC_HYBRID, CAR.ACURA_MDX_HYBRID, CAR.V6ACCORD_NIDEC, CAR.ACURA_MDX):
       self.steer_not_allowed = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_not_allowed
       #self.steer_torque_limited = True if bool(abs(ret.steeringTorque) >= 60) else self.steer_torque_limited
       self.steer_not_allowed = True if (ret.vEgo < (10 * CV.MPH_TO_MS)) else self.steer_not_allowed
@@ -424,7 +424,7 @@ class CarState(CarStateBase):
     ]
 
     if CP.carFingerprint in SERIAL_STEERING:
-      checks = [("STEER_MOTOR_TORQUE", 100), 
+      checks = [("STEER_MOTOR_TORQUE", 100),
                 ("STEER_STATUS", 100)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE", 0),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
