@@ -263,7 +263,7 @@ class CarInterface(CarInterfaceBase):
         tire_stiffness_factor = 0.444
         ret.steerActuatorDelay = 0.3
         ret.lateralTuning.pid.kf = 0.000035
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.135], [0.062]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.115], [0.052]]
 
     elif candidate == CAR.ODYSSEY:
       stop_and_go = False
@@ -353,7 +353,7 @@ class CarInterface(CarInterfaceBase):
     ret.tireStiffnessFront, ret.tireStiffnessRear = scale_tire_stiffness(ret.mass, ret.wheelbase, ret.centerToFront,
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
-    ret.steerActuatorDelay = 0.1
+    ret.steerActuatorDelay = 0.3
     ret.steerRateCost = 0.5
     ret.steerLimitTimer = 0.8
 
