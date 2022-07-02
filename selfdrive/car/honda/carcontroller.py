@@ -164,7 +164,7 @@ class CarController:
     if (CS.CP.carFingerprint in SERIAL_STEERING):
       apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.out.steeringTorque, LKAS_LIMITS, ss=True)
       self.apply_steer_last = apply_steer
-     if apply_steer > 229 and False:
+      if apply_steer > 229 and False:
         apply_steer_orig = apply_steer
         apply_steer = (apply_steer - 229) * 2 + apply_steer
         if apply_steer > 240:
@@ -174,7 +174,7 @@ class CarController:
                 self.apply_steer_over_max_counter = 0
         else:
             self.apply_steer_over_max_counter = 0
-     elif apply_steer < -229 and False:
+      elif apply_steer < -229 and False:
         apply_steer_orig = apply_steer
         apply_steer = (apply_steer + 229) * 2 + apply_steer
         if apply_steer < -240:
@@ -184,7 +184,7 @@ class CarController:
                 self.apply_steer_over_max_counter = 0
             else:
                 self.apply_steer_over_max_counter = 0
-     else:
+      else:
         self.apply_steer_over_max_counter = 0
 
     self.apply_steer_last = apply_steer
