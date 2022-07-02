@@ -13,7 +13,6 @@ from selfdrive.controls.lib.drive_helpers import rate_limit
 VisualAlert = car.CarControl.HUDControl.VisualAlert
 LongCtrlState = car.CarControl.Actuators.LongControlState
 
-
 def compute_gb_honda_bosch(accel, speed):
   # TODO returns 0s, is unused
   return 0.0, 0.0
@@ -113,6 +112,7 @@ class CarController:
     self.last_pump_ts = 0.
     self.apply_steer_last = 0
 
+
     self.accel = 0.0
     self.speed = 0.0
     self.gas = 0.0
@@ -165,6 +165,30 @@ class CarController:
       apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.out.steeringTorque, LKAS_LIMITS, ss=True)
       self.apply_steer_last = apply_steer
 
+        if apply_steer > 229 and False:
+          apply_steer_orig = apply_steer
+          apply_steer = (apply_steer - 229) * 2 + apply_steer
+          if apply_steer > 240:
+            self.apply_steer_over_max_counter += 1
+            if self.apply_steer_over_max_counter > 3:
+              apply_steer = apply_steer_orig
+              self.apply_steer_over_max_counter = 0
+          else:
+            self.apply_steer_over_max_counter = 0
+        elif apply_steer < -229 and False:
+          apply_steer_orig = apply_steer
+          apply_steer = (apply_steer + 229) * 2 + apply_steer
+          if apply_steer < -240:
+            self.apply_steer_over_max_counter+= 1
+            if self.apply_steer_over_max_counter > 3:
+              apply_steer = apply_steer_orig
+              self.apply_steer_over_max_counter = 0
+          else:
+            self.apply_steer_over_max_counter = 0
+        else:
+          self.apply_steer_over_max_counter = 0
+
+    self.apply_steer_last = apply_steer
     # steer torque is converted back to CAN reference (positive when steering right)
     apply_steer = -apply_steer
 
