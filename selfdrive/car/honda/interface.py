@@ -296,8 +296,8 @@ class CarInterface(CarInterfaceBase):
         ret.steerRatio = 15.66  # as spec
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 238], [0, 238]]  # TODO: determine if there is a dead zone at the top end
         tire_stiffness_factor = 0.444
-        ret.steerActuatorDelay = 0.3
-        ret.lateralTuning.pid.kf = 0.000035
+        ret.steerActuatorDelay = 0.2
+        ret.lateralTuning.pid.kf = 0.00004
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.115], [0.052]]
 
     else:
@@ -328,7 +328,7 @@ class CarInterface(CarInterfaceBase):
     ret.tireStiffnessFront, ret.tireStiffnessRear = scale_tire_stiffness(ret.mass, ret.wheelbase, ret.centerToFront,
                                                                          tire_stiffness_factor=tire_stiffness_factor)
 
-    ret.steerActuatorDelay = 0.3
+    ret.steerActuatorDelay = 0.2
     ret.steerRateCost = 0.5
     ret.steerLimitTimer = 0.8
 
