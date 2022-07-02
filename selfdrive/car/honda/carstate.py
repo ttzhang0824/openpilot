@@ -58,7 +58,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
   else:
       checks.append(("STEER_STATUS", 100))
 
-  if CP.carFingerprint == CAR.ODYSSEY_CHN or CP.carFingerprint in SERIAL_STEERING::
+  if CP.carFingerprint == CAR.ODYSSEY_CHN or CP.carFingerprint in SERIAL_STEERING:
     checks += [
       ("SCM_FEEDBACK", 25),
       ("SCM_BUTTONS", 50),
@@ -336,7 +336,7 @@ class CarState(CarStateBase):
     checks = [
       ("STEERING_CONTROL", 100),
     ]
-    
+
     if CP.carFingerprint in SERIAL_STEERING:
       checks = [("STEER_MOTOR_TORQUE", 100),
                 ("STEER_STATUS", 100)]
