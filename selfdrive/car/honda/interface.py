@@ -297,8 +297,8 @@ class CarInterface(CarInterfaceBase):
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 238], [0, 238]]  # TODO: determine if there is a dead zone at the top end
         tire_stiffness_factor = 0.444
         ret.steerActuatorDelay = 0.2
-        ret.lateralTuning.pid.kf = 0.00004
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.115], [0.052]]
+        ret.lateralTuning.pid.kf = 0.00003
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.10], [0.05]]
 
     else:
       raise ValueError(f"unsupported car {candidate}")
