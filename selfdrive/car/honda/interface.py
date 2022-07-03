@@ -298,7 +298,7 @@ class CarInterface(CarInterfaceBase):
         tire_stiffness_factor = 0.444
         ret.steerActuatorDelay = 0.2
         ret.lateralTuning.pid.kf = 0.00003
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.10], [0.05]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.08], [0.05]]
 
     else:
       raise ValueError(f"unsupported car {candidate}")
