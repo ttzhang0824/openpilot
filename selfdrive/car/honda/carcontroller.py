@@ -181,7 +181,9 @@ class CarController():
     starting = actuators.longControlState == LongCtrlState.starting
 
     # wind brake from air resistance decel at high speed
-    wind_brake = interp(CS.out.vEgo, [0.0, 2.3, 35.0], [0.001, 0.002, 0.15])
+    #wind_brake = interp(CS.out.vEgo, [0.0, 2.3, 35.0], [0.001, 0.002, 0.15])
+    wind_brake = 0.001 + 0.00035 * (CS.out.vEgo * CS.out.vEgo)
+
     # all of this is only relevant for HONDA NIDEC
     max_accel = interp(CS.out.vEgo, P.NIDEC_MAX_ACCEL_BP, P.NIDEC_MAX_ACCEL_V)
     # TODO this 1.44 is just to maintain previous behavior

@@ -105,6 +105,21 @@ class CAR:
   INSIGHT = "HONDA INSIGHT 2019"
   HONDA_E = "HONDA E 2020"
 
+  # diag message that in some Nidec cars only appear with 1s freq if VIN query is performed
+  DIAG_MSGS = {1600: 5, 1601: 8}
+
+  FINGERPRINTS = {
+      CAR.ACURA_MDX: [{
+      57: 3, 145: 8, 308: 5, 316: 8, 334: 8, 342: 6, 344: 8, 379: 8, 380: 8, 398: 3, 411: 5, 419: 8, 420: 8, 422: 8, 425: 8, 426: 8, 432: 7, 450: 8, 463: 8, 464: 8, 476: 4, 487: 4, 490: 8, 506: 8, 521: 8, 542: 7, 545: 5, 546: 3, 597: 8, 660: 8, 773: 7, 777: 8, 780: 8, 800: 8, 804: 8, 808: 8, 819: 7, 821: 5, 825: 4, 829: 5, 837: 5, 856: 7, 871: 8, 881: 8, 882: 2, 884: 7, 891: 8, 892: 8, 918: 7, 923: 2, 927: 8, 929: 8, 983: 8, 985: 3, 1027: 5, 1029: 8, 1036: 8, 1039: 8, 1064: 7, 1070: 8, 1088: 8, 1089: 8, 1092: 1, 1108: 8, 1110: 8, 1125: 8, 1137: 8, 1296: 8, 1348: 5, 1600: 5, 1601: 8, 1612: 5, 1614: 5, 1615: 8, 1618: 5, 1665: 5
+      }]
+  }
+
+  # add DIAG_MSGS to fingerprints
+  for c in FINGERPRINTS:
+    for f, _ in enumerate(FINGERPRINTS[c]):
+      for d in DIAG_MSGS:
+        FINGERPRINTS[c][f][d] = DIAG_MSGS[d]
+
 FW_VERSIONS = {
   CAR.ACCORD: {
     (Ecu.programmedFuelInjection, 0x18da10f1, None): [
