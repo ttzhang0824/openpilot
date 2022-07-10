@@ -57,7 +57,7 @@ def apply_std_steer_torque_limits(apply_torque, apply_torque_last, driver_torque
     min_torque = min(abs(max_steer_allowed), abs(min_steer_allowed))
     max_steer_allowed = min_torque
     min_steer_allowed = -min_torque
-    
+
   apply_torque = clip(apply_torque, min_steer_allowed, max_steer_allowed)
 
   # slow rate if steer torque increases in magnitude
