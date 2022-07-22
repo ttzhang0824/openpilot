@@ -6,7 +6,7 @@ from common.numpy_fast import interp
 from opendbc.can.can_define import CANDefine
 from opendbc.can.parser import CANParser
 from selfdrive.car.honda.hondacan import get_pt_bus
-from selfdrive.car.honda.values import CAR, DBC, STEER_THRESHOLD, HONDA_BOSCH, HONDA_NIDEC_ALT_SCM_MESSAGES, HONDA_BOSCH_ALT_BRAKE_SIGNAL, HONDA_BOSCH_RADARLESS
+from selfdrive.car.honda.values import CAR, DBC, STEER_THRESHOLD, HONDA_BOSCH, HONDA_NIDEC_ALT_SCM_MESSAGES, HONDA_BOSCH_ALT_BRAKE_SIGNAL, HONDA_BOSCH_RADARLESS, SERIAL_STEERING
 from selfdrive.car.interfaces import CarStateBase
 
 TransmissionType = car.CarParams.TransmissionType
@@ -314,6 +314,13 @@ class CarState(CarStateBase):
     checks = [
       ("STEERING_CONTROL", 100),
     ]
+
+    if CP.carFingerprint in SERIAL_STEERING:
+      checks = [("STEER_MOTOR_TORQUE", 100),
+                ("STEER_STATUS", 100)]
+      signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
+                  ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
+                  ("STEER_STATUS", "STEER_STATUS")]
 
     if CP.carFingerprint in HONDA_BOSCH_RADARLESS and not CP.openpilotLongitudinalControl:
       signals += [
