@@ -23,7 +23,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     ("STEER_ANGLE_RATE", "STEERING_SENSORS"),
     ("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
     ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
-    ("IMPERIAL_UNIT", "CAR_SPEED"),
+    #("IMPERIAL_UNIT", "CAR_SPEED"),
     ("LEFT_BLINKER", "SCM_FEEDBACK"),
     ("RIGHT_BLINKER", "SCM_FEEDBACK"),
     ("SEATBELT_DRIVER_LAMP", "SEATBELT_STATUS"),
@@ -50,7 +50,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     ("SEATBELT_STATUS", 10),
     ("CRUISE", 10),
     ("POWERTRAIN_DATA", 100),
-    ("CAR_SPEED", 10),
+    #("CAR_SPEED", 10),
     ("VSA_STATUS", 50),
     ("STEER_STATUS", 100),
     ("STEER_MOTOR_TORQUE", 0),  # TODO: not on every car
@@ -276,7 +276,7 @@ class CarState(CarStateBase):
 
     ret.brake = cp.vl["VSA_STATUS"]["USER_BRAKE"]
     ret.cruiseState.enabled = cp.vl["POWERTRAIN_DATA"]["ACC_STATUS"] != 0
-    ret.cruiseState.available = True #bool(cp.vl[self.main_on_sig_msg]["MAIN_ON"])
+    ret.cruiseState.available = bool(cp.vl[self.main_on_sig_msg]["MAIN_ON"])
 
     # Gets rid of Pedal Grinding noise when brake is pressed at slow speeds for some models
     if self.CP.carFingerprint in (CAR.PILOT, CAR.PASSPORT, CAR.RIDGELINE):
