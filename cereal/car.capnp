@@ -148,9 +148,11 @@ struct CarState {
   canTimeout @40 :Bool;     # CAN bus dropped out
 
   # car speed
-  vEgo @1 :Float32;         # best estimate of speed
-  aEgo @16 :Float32;        # best estimate of acceleration
-  vEgoRaw @17 :Float32;     # unfiltered speed from CAN sensors
+  vEgo @1 :Float32;          # best estimate of speed
+  aEgo @16 :Float32;         # best estimate of acceleration
+  vEgoRaw @17 :Float32;      # unfiltered speed from CAN sensors
+  vEgoCluster @44 :Float32;  # best estimate of speed shown on car's instrument cluster, used for UI
+
   yawRate @22 :Float32;     # best estimate of yaw rate
   standstill @18 :Bool;
   wheelSpeeds @2 :WheelSpeeds;
@@ -220,6 +222,7 @@ struct CarState {
   struct CruiseState {
     enabled @0 :Bool;
     speed @1 :Float32;
+    speedCluster @6 :Float32;  # Set speed as shown on instrument cluster
     available @2 :Bool;
     speedOffset @3 :Float32;
     standstill @4 :Bool;
@@ -598,6 +601,7 @@ struct CarParams {
     responseAddress @4 :UInt32;
     request @5 :List(Data);
     brand @6 :Text;
+    bus @7 :UInt8;
   }
 
   enum Ecu {
