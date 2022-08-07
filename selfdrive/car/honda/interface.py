@@ -302,7 +302,7 @@ class CarInterface(CarInterfaceBase):
         ret.steerActuatorDelay = 0.3
         #ret.lateralTuning.pid.kf =  0.0001
         #ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.15], [0.035]]
-        steering_angle_deadzone_deg =0.3
+        steering_angle_deadzone_deg =0.1
         CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning, steering_angle_deadzone_deg)
 
     else:
