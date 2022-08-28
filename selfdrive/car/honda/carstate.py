@@ -169,7 +169,7 @@ class CarState(CarStateBase):
     self.cruise_buttons = cp.vl["SCM_BUTTONS"]["CRUISE_BUTTONS"]
 
     # used for car hud message
-        self.is_metric = False
+    self.is_metric = False
 
 
     # ******************* parse out can *******************
@@ -314,7 +314,7 @@ class CarState(CarStateBase):
     checks = [
       ("STEERING_CONTROL", 100),
     ]
-    
+
     if CP.carFingerprint in SERIAL_STEERING:
       checks = [("STEER_MOTOR_TORQUE", 100),
                 ("STEER_STATUS", 100)]
