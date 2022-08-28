@@ -213,8 +213,8 @@ class CarController:
       pcm_accel = int(1.0 * 0xc6)
     else:
       pcm_speed_V = [0.0,
-                     clip(CS.out.vEgo - 2.0, 0.0, 100.0),
-                     clip(CS.out.vEgo + 2.0, 0.0, 100.0),
+                     clip(CS.out.vEgo - 3.0, 0.0, 100.0),
+                     clip(CS.out.vEgo + 1.0, 0.0, 100.0),
                      clip(CS.out.vEgo + 5.0, 0.0, 100.0)]
       pcm_speed = interp(gas - brake, pcm_speed_BP, pcm_speed_V)
       pcm_accel = int(clip((accel / 1.44) / max_accel / 1.5, 0.0, 1.0) * 0xc6)
