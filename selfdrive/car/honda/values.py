@@ -107,7 +107,6 @@ class CAR:
   RIDGELINE = "HONDA RIDGELINE 2017"
   INSIGHT = "HONDA INSIGHT 2019"
   HONDA_E = "HONDA E 2020"
-  ACURA_MDX = "ACURA MDX 2018 STANDARD SERIAL STEERING"
 
 # diag message that in some Nidec cars only appear with 1s freq if VIN query is performed
 DIAG_MSGS = {1600: 5, 1601: 8}
