@@ -24,7 +24,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     ("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
     ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
     #("IMPERIAL_UNIT", "CAR_SPEED"),
-    ("ROUGH_CAR_SPEED_2", "CAR_SPEED"),
+    #("ROUGH_CAR_SPEED_2", "CAR_SPEED"),
     ("LEFT_BLINKER", "SCM_FEEDBACK"),
     ("RIGHT_BLINKER", "SCM_FEEDBACK"),
     ("SEATBELT_DRIVER_LAMP", "SEATBELT_STATUS"),
