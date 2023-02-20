@@ -241,7 +241,7 @@ class CarState(CarStateBase):
       # Same threshold as panda, equivalent to 1e-5 with previous DBC scaling
       ret.gas = (cp.vl["GAS_SENSOR"]["INTERCEPTOR_GAS"] + cp.vl["GAS_SENSOR"]["INTERCEPTOR_GAS2"]) // 2
       ret.gasPressed = ret.gas > 492
-    else:
+    else:gi
       ret.gas = cp.vl["POWERTRAIN_DATA"]["PEDAL_GAS"]
       ret.gasPressed = ret.gas > 1e-5
 
@@ -345,7 +345,7 @@ class CarState(CarStateBase):
                 ("STEER_STATUS", 100)]
       signals += [("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
                   ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
-                  ("STEER_STATUS", "STEER_STATUS")
+                  ("STEER_STATUS", "STEER_STATUS")]
 
     elif CP.carFingerprint not in HONDA_BOSCH:
       signals += [("COMPUTER_BRAKE", "BRAKE_COMMAND"),
