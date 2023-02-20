@@ -157,7 +157,7 @@ class CarController:
     # **** process the car messages ****
 
     # steer torque is converted back to CAN reference (positive when steering right)
-   apply_steer = int(interp(actuators.steer * P.STEER_MAX, P.STEER_LOOKUP_BP, P.STEER_LOOKUP_V))
+    apply_steer = int(interp(actuators.steer * P.STEER_MAX, P.STEER_LOOKUP_BP, P.STEER_LOOKUP_V))
 
     if (CS.CP.carFingerprint in SERIAL_STEERING):
       apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.out.steeringTorque, LKAS_LIMITS, ss=True)
@@ -186,9 +186,6 @@ class CarController:
         self.apply_steer_over_max_counter = 0
 
     self.apply_steer_last = apply_steer
-
-    # steer torque is converted back to CAN reference (positive when steering right)
-    apply_steer = -apply_steer
 
     # steer torque is converted back to CAN reference (positive when steering right)
     apply_steer = -apply_steer
