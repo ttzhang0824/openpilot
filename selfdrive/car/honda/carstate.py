@@ -24,7 +24,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     ("MOTOR_TORQUE", "STEER_MOTOR_TORQUE"),
     ("STEER_TORQUE_SENSOR", "STEER_STATUS"),
     #("IMPERIAL_UNIT", "CAR_SPEED"),
-    #("ROUGH_CAR_SPEED_2", "CAR_SPEED"),
+    ("ROUGH_CAR_SPEED_2", "CAR_SPEED"),
     ("LEFT_BLINKER", "SCM_FEEDBACK"),
     ("RIGHT_BLINKER", "SCM_FEEDBACK"),
     ("SEATBELT_DRIVER_LAMP", "SEATBELT_STATUS"),
@@ -218,7 +218,7 @@ class CarState(CarStateBase):
     ret.vEgoRaw = (1. - v_weight) * cp.vl["ENGINE_DATA"]["XMISSION_SPEED"] * CV.KPH_TO_MS * self.CP.wheelSpeedFactor + v_weight * v_wheel
     ret.vEgo, ret.aEgo = self.update_speed_kf(ret.vEgoRaw)
 
-    self.dash_speed_seen = self.dash_speed_seen or cp.vl["CAR_SPEED"]["ROUGH_CAR_SPEED_2"] > 1e-3
+    self.dash_speed_seen = self.dash_speed_seen #or cp.vl["CAR_SPEED"]["ROUGH_CAR_SPEED_2"] > 1e-3
     if self.dash_speed_seen:
       conversion = CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS
       ret.vEgoCluster = cp.vl["CAR_SPEED"]["ROUGH_CAR_SPEED_2"] * conversion
