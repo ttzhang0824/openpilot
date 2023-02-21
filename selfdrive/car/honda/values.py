@@ -1527,6 +1527,7 @@ STEER_THRESHOLD = {
   # default is 1200, overrides go here
   CAR.ACURA_RDX: 400,
   CAR.CRV_EU: 400,
+  CAR.ACURA_MDX: 25,
 }
 
 HONDA_NIDEC_ALT_PCM_ACCEL = {CAR.ODYSSEY}
