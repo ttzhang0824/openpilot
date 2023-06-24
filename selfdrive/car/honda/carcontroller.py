@@ -189,7 +189,7 @@ class CarController:
     self.apply_steer_last = apply_steer
 
     # steer torque is converted back to CAN reference (positive when steering right)
-    apply_steer = -apply_steer
+    #apply_steer = -apply_steer
     # Send CAN commands
     can_sends = []
 
