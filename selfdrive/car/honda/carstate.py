@@ -340,7 +340,7 @@ class CarState(CarStateBase):
   def get_cam_can_parser(CP):
     signals = []
     checks = [
-      #("STEERING_CONTROL", 100),
+     ("STEERING_CONTROL", 100),
     ]
 
     if CP.carFingerprint in SERIAL_STEERING:
