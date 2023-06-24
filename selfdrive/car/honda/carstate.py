@@ -6,7 +6,7 @@ from common.numpy_fast import interp
 from opendbc.can.can_define import CANDefine
 from opendbc.can.parser import CANParser
 from selfdrive.car.honda.hondacan import get_cruise_speed_conversion, get_pt_bus
-from selfdrive.car.honda.values import CAR, DBC, STEER_THRESHOLD, HONDA_BOSCH, HONDA_NIDEC_ALT_SCM_MESSAGES, HONDA_BOSCH_ALT_BRAKE_SIGNAL, HONDA_BOSCH_RADARLESS
+from selfdrive.car.honda.values import CAR, DBC, STEER_THRESHOLD, HONDA_BOSCH, HONDA_NIDEC_ALT_SCM_MESSAGES, HONDA_BOSCH_ALT_BRAKE_SIGNAL, HONDA_BOSCH_RADARLESS, SERIAL_STEERING
 from selfdrive.car.interfaces import CarStateBase
 
 TransmissionType = car.CarParams.TransmissionType
@@ -53,11 +53,16 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     ("POWERTRAIN_DATA", 100),
     ("CAR_SPEED", 10),
     ("VSA_STATUS", 50),
-    ("STEER_STATUS", 100),
+    #("STEER_STATUS", 100),
     ("STEER_MOTOR_TORQUE", 0),  # TODO: not on every car
   ]
 
-  if CP.carFingerprint == CAR.ODYSSEY_CHN:
+  if CP.carFingerprint in SERIAL_STEERING:
+      checks.append(("STEER_STATUS", 0))
+  else:
+      checks.append(("STEER_STATUS", 100))
+
+  if CP.carFingerprint == CAR.ODYSSEY_CHN or CP.carFingerprint in SERIAL_STEERING:
     checks += [
       ("SCM_FEEDBACK", 25),
       ("SCM_BUTTONS", 50),
@@ -68,7 +73,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
       ("SCM_BUTTONS", 25),
     ]
 
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E):
+  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX_HYBRID, CAR.ACURA_MDX):
     checks.append((gearbox_msg, 50))
   else:
     checks.append((gearbox_msg, 100))
@@ -98,7 +103,7 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
     signals += [("CRUISE_SPEED_PCM", "CRUISE"),
                 ("CRUISE_SPEED_OFFSET", "CRUISE_PARAMS")]
 
-    if CP.carFingerprint == CAR.ODYSSEY_CHN:
+    if CP.carFingerprint == CAR.ODYSSEY_CHN or CP.carFingerprint in SERIAL_STEERING:
       checks.append(("CRUISE_PARAMS", 10))
     else:
       checks.append(("CRUISE_PARAMS", 50))
