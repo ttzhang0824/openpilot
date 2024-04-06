@@ -1,0 +1,21 @@
+[submodule "opendbc"]
+  path = opendbc
+  url = ../../sunnyhaibin/opendbc.git
+[submodule "cereal"]
+  path = cereal
+  url = ../../sunnyhaibin/cereal.git
+[submodule "rednose_repo"]
+  path = rednose_repo
+  url = ../../commaai/rednose.git
+[submodule "body"]
+  path = body
+  url = ../../commaai/body.git
+[submodule "teleoprtc_repo"]
+  path = teleoprtc_repo
+  url = ../../commaai/teleoprtc
+[submodule "tinygrad"]
+  path = tinygrad_repo
+  url = https://github.com/geohot/tinygrad.git
+[submodule "panda"]
+  path = panda
+  url = https://github.com/commaai/panda.git

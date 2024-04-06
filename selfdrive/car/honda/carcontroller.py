@@ -7,9 +7,9 @@ from openpilot.common.numpy_fast import clip, interp
 from openpilot.common.params import Params
 from openpilot.common.realtime import DT_CTRL
 from opendbc.can.packer import CANPacker
-from openpilot.selfdrive.car import create_gas_interceptor_command
+from openpilot.selfdrive.car import create_gas_interceptor_command, apply_std_steer_torque_limits
 from openpilot.selfdrive.car.honda import hondacan
-from openpilot.selfdrive.car.honda.values import CruiseButtons, VISUAL_HUD, HONDA_BOSCH, HONDA_BOSCH_RADARLESS, HONDA_NIDEC_ALT_PCM_ACCEL, CarControllerParams
+from openpilot.selfdrive.car.honda.values import CruiseButtons, VISUAL_HUD, HONDA_BOSCH, HONDA_BOSCH_RADARLESS, HONDA_NIDEC_ALT_PCM_ACCEL, CarControllerParams, SERIAL_STEERING, LKAS_LIMITS
 from openpilot.selfdrive.controls.lib.drive_helpers import rate_limit, HONDA_V_CRUISE_MIN
 
 VisualAlert = car.CarControl.HUDControl.VisualAlert
@@ -127,6 +127,7 @@ class CarController:
     self.brake = 0.0
     self.last_steer = 0.0
     self.last_button_frame = 0
+    self.apply_steer_last = 0
 
     self.sm = messaging.SubMaster(['longitudinalPlanSP'])
     self.param_s = Params()

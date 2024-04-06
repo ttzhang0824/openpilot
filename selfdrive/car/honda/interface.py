@@ -311,6 +311,19 @@ class CarInterface(CarInterfaceBase):
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.24]]
       tire_stiffness_factor = 1.
+    
+      elif candidate == CAR.ACURA_MDX:
+              stop_and_go = True
+              ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
+              ret.wheelbase = 2.82
+              ret.centerToFront = ret.wheelbase * 0.428
+              ret.steerRatio = 15.66  # as spec
+              ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 238], [0, 238]]  # TODO: determine if there is a dead zone at the top end
+              tire_stiffness_factor = 0.444
+              ret.steerActuatorDelay = 0.1
+              #ret.lateralTuning.pid.kf = 0.000035
+              #ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.115], [0.052]]
+              CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     else:
       raise ValueError(f"unsupported car {candidate}")
@@ -336,7 +349,7 @@ class CarInterface(CarInterfaceBase):
     # min speed to enable ACC. if car can do stop and go, then set enabling speed
     # to a negative value, so it won't matter. Otherwise, add 0.5 mph margin to not
     # conflict with PCM acc
-    ret.autoResumeSng = candidate in (HONDA_BOSCH | {CAR.CIVIC, CAR.CLARITY}) or ret.enableGasInterceptor
+    ret.autoResumeSng = candidate in (HONDA_BOSCH | {CAR.CIVIC, CAR.CLARITY, CAR.ACURA_MDX}) or ret.enableGasInterceptor
     ret.minEnableSpeed = -1. if ret.autoResumeSng else 25.5 * CV.MPH_TO_MS
 
     ret.steerActuatorDelay = 0.1

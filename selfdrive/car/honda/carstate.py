@@ -24,7 +24,7 @@ def get_can_messages(CP, gearbox_msg):
     ("POWERTRAIN_DATA", 100),
     ("CAR_SPEED", 10),
     ("VSA_STATUS", 50),
-    ("STEER_STATUS", 100),
+    ("STEER_STATUS", 0),
     ("STEER_MOTOR_TORQUE", 0),  # TODO: not on every car
   ]
 
@@ -39,7 +39,7 @@ def get_can_messages(CP, gearbox_msg):
       ("SCM_BUTTONS", 25),
     ]
 
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E):
+  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX):
     messages.append((gearbox_msg, 50))
   else:
     messages.append((gearbox_msg, 100))
