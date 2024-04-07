@@ -2,6 +2,7 @@
 #include "board/config.h"
 
 #include "board/safety.h"
+#include "board/drivers/gmlan_alt.h"
 
 #include "board/drivers/pwm.h"
 #include "board/drivers/usb.h"

@@ -140,6 +140,8 @@ void red_init(void) {
   // Initialize harness
   harness_init();
 
+  // Initialize RTC
+  rtc_init();
 
   // Enable CAN transceivers
   red_enable_can_transceivers(true);
@@ -151,9 +153,14 @@ void red_init(void) {
 
   // Set normal CAN mode
   red_set_can_mode(CAN_MODE_NORMAL);
+
+  // change CAN mapping when flipped
+  if (harness.status == HARNESS_STATUS_FLIPPED) {
+    can_flip_buses(0, 2);
+  }
 }
 
-harness_configuration red_harness_config = {
+const harness_configuration red_harness_config = {
   .has_harness = true,
   .GPIO_SBU1 = GPIOC,
   .GPIO_SBU2 = GPIOA,
@@ -167,12 +174,13 @@ harness_configuration red_harness_config = {
   .adc_channel_SBU2 = 17 //ADC1_INP17
 };
 
-board board_red = {
+const board board_red = {
   .set_bootkick = unused_set_bootkick,
   .harness_config = &red_harness_config,
   .has_obd = true,
   .has_spi = false,
   .has_canfd = true,
+  .has_rtc_battery = false,
   .fan_max_rpm = 0U,
   .avdd_mV = 3300U,
   .fan_stall_recovery = false,

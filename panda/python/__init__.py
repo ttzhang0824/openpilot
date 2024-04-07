@@ -6,6 +6,7 @@ import usb1
 import struct
 import hashlib
 import binascii
+import datetime
 import logging
 from functools import wraps, partial
 from itertools import accumulate
@@ -111,6 +112,8 @@ class ALTERNATIVE_EXPERIENCE:
   DISABLE_STOCK_AEB = 2
   RAISE_LONGITUDINAL_LIMITS_TO_ISO_MAX = 8
   ALLOW_AEB = 16
+  ENABLE_MADS = 32
+  MADS_DISABLE_DISENGAGE_LATERAL_ON_BRAKE = 64
 
 class Panda:
 
@@ -148,6 +151,9 @@ class Panda:
   SERIAL_LIN2 = 3
   SERIAL_SOM_DEBUG = 4
 
+  GMLAN_CAN2 = 1
+  GMLAN_CAN3 = 2
+
   USB_PIDS = (0xddee, 0xddcc)
   REQUEST_IN = usb1.ENDPOINT_IN | usb1.TYPE_VENDOR | usb1.RECIPIENT_DEVICE
   REQUEST_OUT = usb1.ENDPOINT_OUT | usb1.TYPE_VENDOR | usb1.RECIPIENT_DEVICE
@@ -165,9 +171,9 @@ class Panda:
   HW_TYPE_CUATRO = b'\x0a'
 
   CAN_PACKET_VERSION = 4
-  HEALTH_PACKET_VERSION = 16
+  HEALTH_PACKET_VERSION = 15
   CAN_HEALTH_PACKET_VERSION = 5
-  HEALTH_STRUCT = struct.Struct("<IIIIIIIIBBBBBHBBBHfBBHBHHB")
+  HEALTH_STRUCT = struct.Struct("<IIIIIIIIIBBBBBHBBBHfBBHBHHB")
   CAN_HEALTH_STRUCT = struct.Struct("<BIBBBBBBBBIIIIIIIHHBBBIIII")
 
   F4_DEVICES = [HW_TYPE_WHITE_PANDA, HW_TYPE_GREY_PANDA, HW_TYPE_BLACK_PANDA, HW_TYPE_UNO, HW_TYPE_DOS]
@@ -191,11 +197,14 @@ class Panda:
   FLAG_TOYOTA_ALT_BRAKE = (1 << 8)
   FLAG_TOYOTA_STOCK_LONGITUDINAL = (2 << 8)
   FLAG_TOYOTA_LTA = (4 << 8)
+  FLAG_TOYOTA_GAS_INTERCEPTOR = (8 << 8)
 
   FLAG_HONDA_ALT_BRAKE = 1
   FLAG_HONDA_BOSCH_LONG = 2
   FLAG_HONDA_NIDEC_ALT = 4
   FLAG_HONDA_RADARLESS = 8
+  FLAG_HONDA_GAS_INTERCEPTOR = 16
+  FLAG_HONDA_CLARITY = 32
 
   FLAG_HYUNDAI_EV_GAS = 1
   FLAG_HYUNDAI_HYBRID_GAS = 2
@@ -205,10 +214,12 @@ class Panda:
   FLAG_HYUNDAI_CANFD_ALT_BUTTONS = 32
   FLAG_HYUNDAI_ALT_LIMITS = 64
   FLAG_HYUNDAI_CANFD_HDA2_ALT_STEERING = 128
+  FLAG_HYUNDAI_LFA_BTN = 256
+  FLAG_HYUNDAI_ESCC = 512
+  FLAG_HYUNDAI_NON_SCC = 1024
 
   FLAG_TESLA_POWERTRAIN = 1
   FLAG_TESLA_LONG_CONTROL = 2
-  FLAG_TESLA_RAVEN = 4
 
   FLAG_VOLKSWAGEN_LONG_CONTROL = 1
 
@@ -217,6 +228,7 @@ class Panda:
 
   FLAG_SUBARU_GEN2 = 1
   FLAG_SUBARU_LONG = 2
+  FLAG_SUBARU_MAX_STEER_IMPREZA_2018 = 4
 
   FLAG_SUBARU_PREGLOBAL_REVERSED_DRIVER_TORQUE = 1
 
@@ -227,6 +239,8 @@ class Panda:
 
   FLAG_FORD_LONG_CONTROL = 1
   FLAG_FORD_CANFD = 2
+
+  FLAG_TOYOTA_MADS_LTA_MSG = 1
 
   def __init__(self, serial: str | None = None, claim: bool = True, disable_checks: bool = True, can_speed_kbps: int = 500):
     self._connect_serial = serial
@@ -303,10 +317,6 @@ class Panda:
     # set CAN speed
     for bus in range(PANDA_BUS_CNT):
       self.set_can_speed_kbps(bus, self._can_speed_kbps)
-
-  @property
-  def spi(self) -> bool:
-    return isinstance(self._handle, PandaSpiHandle)
 
   @classmethod
   def spi_connect(cls, serial, ignore_version=False):
@@ -437,8 +447,6 @@ class Panda:
           self._handle.controlWrite(Panda.REQUEST_IN, 0xd8, 0, 0, b'', timeout=timeout, expect_disconnect=True)
     except Exception:
       pass
-
-    self.close()
     if not enter_bootloader and reconnect:
       self.reconnect()
 
@@ -596,25 +604,26 @@ class Panda:
       "safety_rx_invalid": a[4],
       "tx_buffer_overflow": a[5],
       "rx_buffer_overflow": a[6],
-      "faults": a[7],
-      "ignition_line": a[8],
-      "ignition_can": a[9],
-      "controls_allowed": a[10],
-      "car_harness_status": a[11],
-      "safety_mode": a[12],
-      "safety_param": a[13],
-      "fault_status": a[14],
-      "power_save_enabled": a[15],
-      "heartbeat_lost": a[16],
-      "alternative_experience": a[17],
-      "interrupt_load": a[18],
-      "fan_power": a[19],
-      "safety_rx_checks_invalid": a[20],
-      "spi_checksum_error_count": a[21],
-      "fan_stall_count": a[22],
-      "sbu1_voltage_mV": a[23],
-      "sbu2_voltage_mV": a[24],
-      "som_reset_triggered": a[25],
+      "gmlan_send_errs": a[7],
+      "faults": a[8],
+      "ignition_line": a[9],
+      "ignition_can": a[10],
+      "controls_allowed": a[11],
+      "car_harness_status": a[12],
+      "safety_mode": a[13],
+      "safety_param": a[14],
+      "fault_status": a[15],
+      "power_save_enabled": a[16],
+      "heartbeat_lost": a[17],
+      "alternative_experience": a[18],
+      "interrupt_load": a[19],
+      "fan_power": a[20],
+      "safety_rx_checks_invalid": a[21],
+      "spi_checksum_error_count": a[22],
+      "fan_stall_count": a[23],
+      "sbu1_voltage_mV": a[24],
+      "sbu2_voltage_mV": a[25],
+      "som_reset_triggered": a[26],
     }
 
   @ensure_can_health_packet_version
@@ -751,10 +760,21 @@ class Panda:
   def set_power_save(self, power_save_enabled=0):
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xe7, int(power_save_enabled), 0, b'')
 
+  def enable_deepsleep(self):
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xfb, 0, 0, b'')
+
   def set_safety_mode(self, mode=SAFETY_SILENT, param=0):
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xdc, mode, param, b'')
 
+  def set_gmlan(self, bus=2):
+    # TODO: check panda type
+    if bus is None:
+      self._handle.controlWrite(Panda.REQUEST_OUT, 0xdb, 0, 0, b'')
+    elif bus in (Panda.GMLAN_CAN2, Panda.GMLAN_CAN3):
+      self._handle.controlWrite(Panda.REQUEST_OUT, 0xdb, 1, bus, b'')
+
   def set_obd(self, obd):
+    # TODO: check panda type
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xdb, int(obd), 0, b'')
 
   def set_can_loopback(self, enable):
@@ -881,6 +901,21 @@ class Panda:
   # sending a heartbeat will reenable the checks
   def set_heartbeat_disabled(self):
     self._handle.controlWrite(Panda.REQUEST_OUT, 0xf8, 0, 0, b'')
+
+  # ******************* RTC *******************
+  def set_datetime(self, dt):
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa1, int(dt.year), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa2, int(dt.month), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa3, int(dt.day), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa4, int(dt.isoweekday()), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa5, int(dt.hour), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa6, int(dt.minute), 0, b'')
+    self._handle.controlWrite(Panda.REQUEST_OUT, 0xa7, int(dt.second), 0, b'')
+
+  def get_datetime(self):
+    dat = self._handle.controlRead(Panda.REQUEST_IN, 0xa0, 0, 0, 8)
+    a = struct.unpack("HBBBBBB", dat)
+    return datetime.datetime(a[0], a[1], a[2], a[4], a[5], a[6])
 
   # ****************** Timer *****************
   def get_microsecond_timer(self):

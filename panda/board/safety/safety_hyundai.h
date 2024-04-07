@@ -82,7 +82,11 @@ RxCheck hyundai_legacy_rx_checks[] = {
   HYUNDAI_SCC12_ADDR_CHECK(0)
 };
 
+
+const int HYUNDAI_PARAM_ESCC = 512;
+
 bool hyundai_legacy = false;
+bool hyundai_escc = false;
 
 
 static uint8_t hyundai_get_counter(const CANPacket_t *to_push) {
@@ -219,7 +223,7 @@ static bool hyundai_tx_hook(const CANPacket_t *to_send) {
   int addr = GET_ADDR(to_send);
 
   // FCA11: Block any potential actuation
-  if (addr == 0x38D) {
+  if ((addr == 0x38D) && !hyundai_escc) {
     int CR_VSM_DecCmd = GET_BYTE(to_send, 1);
     bool FCA_CmdAct = GET_BIT(to_send, 20U);
     bool CF_VSM_DecCmdAct = GET_BIT(to_send, 31U);
@@ -241,8 +245,10 @@ static bool hyundai_tx_hook(const CANPacket_t *to_send) {
 
     violation |= longitudinal_accel_checks(desired_accel_raw, HYUNDAI_LONG_LIMITS);
     violation |= longitudinal_accel_checks(desired_accel_val, HYUNDAI_LONG_LIMITS);
-    violation |= (aeb_decel_cmd != 0);
-    violation |= aeb_req;
+    if (!hyundai_escc) {
+      violation |= (aeb_decel_cmd != 0);
+      violation |= aeb_req;
+    }
 
     if (violation) {
       tx = false;
@@ -261,7 +267,7 @@ static bool hyundai_tx_hook(const CANPacket_t *to_send) {
   }
 
   // UDS: Only tester present ("\x02\x3E\x80\x00\x00\x00\x00\x00") allowed on diagnostics address
-  if (addr == 0x7D0) {
+  if ((addr == 0x7D0) && !hyundai_escc) {
     if ((GET_BYTES(to_send, 0, 4) != 0x00803E02U) || (GET_BYTES(to_send, 4, 4) != 0x0U)) {
       tx = false;
     }
@@ -299,6 +305,7 @@ static int hyundai_fwd_hook(int bus_num, int addr) {
 static safety_config hyundai_init(uint16_t param) {
   hyundai_common_init(param);
   hyundai_legacy = false;
+  hyundai_escc = GET_FLAG(param, HYUNDAI_PARAM_ESCC);
 
   if (hyundai_camera_scc) {
     hyundai_longitudinal = false;
@@ -320,6 +327,7 @@ static safety_config hyundai_legacy_init(uint16_t param) {
   hyundai_legacy = true;
   hyundai_longitudinal = false;
   hyundai_camera_scc = false;
+  hyundai_escc = GET_FLAG(param, HYUNDAI_PARAM_ESCC);
   return BUILD_SAFETY_CFG(hyundai_legacy_rx_checks, HYUNDAI_TX_MSGS);
 }
 

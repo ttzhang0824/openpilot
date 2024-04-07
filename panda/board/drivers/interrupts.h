@@ -64,7 +64,7 @@ void handle_interrupt(IRQn_Type irq_type){
 
 // Every second
 void interrupt_timer_handler(void) {
-  if (INTERRUPT_TIMER->SR != 0U) {
+  if (INTERRUPT_TIMER->SR != 0) {
     for (uint16_t i = 0U; i < NUM_INTERRUPTS; i++) {
       // Log IRQ call rate faults
       if (check_interrupt_rate && (interrupts[i].call_counter > interrupts[i].max_call_rate)) {

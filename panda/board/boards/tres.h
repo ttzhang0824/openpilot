@@ -33,7 +33,7 @@ void tres_init(void) {
   // Enable USB 3.3V LDO for USB block
   register_set_bits(&(PWR->CR3), PWR_CR3_USBREGEN);
   register_set_bits(&(PWR->CR3), PWR_CR3_USB33DEN);
-  while ((PWR->CR3 & PWR_CR3_USB33RDY) == 0U);
+  while ((PWR->CR3 & PWR_CR3_USB33RDY) == 0);
 
   red_chiplet_init();
 
@@ -70,11 +70,12 @@ void tres_init(void) {
   clock_source_init();
 }
 
-board board_tres = {
+const board board_tres = {
   .harness_config = &red_chiplet_harness_config,
   .has_obd = true,
   .has_spi = true,
   .has_canfd = true,
+  .has_rtc_battery = true,
   .fan_max_rpm = 6600U,
   .avdd_mV = 1800U,
   .fan_stall_recovery = false,

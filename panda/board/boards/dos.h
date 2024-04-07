@@ -147,6 +147,8 @@ void dos_init(void) {
   // Initialize harness
   harness_init();
 
+  // Initialize RTC
+  rtc_init();
 
   // Enable CAN transceivers
   dos_enable_can_transceivers(true);
@@ -162,11 +164,16 @@ void dos_init(void) {
   // Set normal CAN mode
   dos_set_can_mode(CAN_MODE_NORMAL);
 
+  // change CAN mapping when flipped
+  if (harness.status == HARNESS_STATUS_FLIPPED) {
+    can_flip_buses(0, 2);
+  }
+
   // Init clock source (camera strobe) using PWM
   clock_source_init();
 }
 
-harness_configuration dos_harness_config = {
+const harness_configuration dos_harness_config = {
   .has_harness = true,
   .GPIO_SBU1 = GPIOC,
   .GPIO_SBU2 = GPIOC,
@@ -180,7 +187,7 @@ harness_configuration dos_harness_config = {
   .adc_channel_SBU2 = 13
 };
 
-board board_dos = {
+const board board_dos = {
   .harness_config = &dos_harness_config,
   .has_obd = true,
 #ifdef ENABLE_SPI
@@ -189,6 +196,7 @@ board board_dos = {
   .has_spi = false,
 #endif
   .has_canfd = false,
+  .has_rtc_battery = true,
   .fan_max_rpm = 6500U,
   .avdd_mV = 3300U,
   .fan_stall_recovery = true,

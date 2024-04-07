@@ -19,6 +19,7 @@
 
 const SteeringLimits SUBARU_STEERING_LIMITS      = SUBARU_STEERING_LIMITS_GENERATOR(2047, 50, 70);
 const SteeringLimits SUBARU_GEN2_STEERING_LIMITS = SUBARU_STEERING_LIMITS_GENERATOR(1000, 40, 40);
+const SteeringLimits SUBARU_STEERING_LIMITS_ALT  = SUBARU_STEERING_LIMITS_GENERATOR(3071, 50, 70);
 
 
 const LongitudinalLimits SUBARU_LONG_LIMITS = {
@@ -110,9 +111,11 @@ RxCheck subaru_gen2_rx_checks[] = {
 
 const uint16_t SUBARU_PARAM_GEN2 = 1;
 const uint16_t SUBARU_PARAM_LONGITUDINAL = 2;
+const uint16_t SUBARU_PARAM_MAX_STEER_2018 = 4;
 
 bool subaru_gen2 = false;
 bool subaru_longitudinal = false;
+bool subaru_max_steer_2018_crosstrek = false;
 
 
 static uint32_t subaru_get_checksum(const CANPacket_t *to_push) {
@@ -191,7 +194,8 @@ static bool subaru_tx_hook(const CANPacket_t *to_send) {
 
     bool steer_req = GET_BIT(to_send, 29U);
 
-    const SteeringLimits limits = subaru_gen2 ? SUBARU_GEN2_STEERING_LIMITS : SUBARU_STEERING_LIMITS;
+    const SteeringLimits limits = subaru_gen2 ? SUBARU_GEN2_STEERING_LIMITS :
+                                  subaru_max_steer_2018_crosstrek ? SUBARU_STEERING_LIMITS_ALT : SUBARU_STEERING_LIMITS;
     violation |= steer_torque_cmd_checks(desired_torque, steer_req, limits);
   }
 
@@ -267,6 +271,7 @@ static int subaru_fwd_hook(int bus_num, int addr) {
 
 static safety_config subaru_init(uint16_t param) {
   subaru_gen2 = GET_FLAG(param, SUBARU_PARAM_GEN2);
+  subaru_max_steer_2018_crosstrek = GET_FLAG(param, SUBARU_PARAM_MAX_STEER_2018);
 
 #ifdef ALLOW_DEBUG
   subaru_longitudinal = GET_FLAG(param, SUBARU_PARAM_LONGITUDINAL);
