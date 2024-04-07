@@ -294,7 +294,7 @@ class CarInterface(CarInterfaceBase):
 
     elif candidate == CAR.ACURA_MDX:
       stop_and_go = True
-      ret.mass = 4204. * CV.LB_TO_KG + STD_CARGO_KG  # average weight
+      ret.mass = 4204. * CV.LB_TO_KG  # average weight
       ret.wheelbase = 2.82
       ret.centerToFront = ret.wheelbase * 0.428
       ret.steerRatio = 15.66  # as spec
