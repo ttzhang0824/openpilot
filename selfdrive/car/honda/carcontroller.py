@@ -7,7 +7,7 @@ from openpilot.common.numpy_fast import clip, interp
 from openpilot.common.params import Params
 from openpilot.common.realtime import DT_CTRL
 from opendbc.can.packer import CANPacker
-from openpilot.selfdrive.car import create_gas_interceptor_command, apply_std_steer_torque_limits
+from openpilot.selfdrive.car import create_gas_interceptor_command, apply_driver_steer_torque_limits
 from openpilot.selfdrive.car.honda import hondacan
 from openpilot.selfdrive.car.honda.values import CruiseButtons, VISUAL_HUD, HONDA_BOSCH, HONDA_BOSCH_RADARLESS, HONDA_NIDEC_ALT_PCM_ACCEL, CarControllerParams, SERIAL_STEERING, LKAS_LIMITS
 from openpilot.selfdrive.controls.lib.drive_helpers import rate_limit, HONDA_V_CRUISE_MIN
@@ -210,6 +210,36 @@ class CarController:
     # steer torque is converted back to CAN reference (positive when steering right)
     apply_steer = int(interp(-limited_steer * self.params.STEER_MAX,
                              self.params.STEER_LOOKUP_BP, self.params.STEER_LOOKUP_V))
+    if (CS.CP.carFingerprint in SERIAL_STEERING):
+      apply_steer = apply_std_steer_torque_limits(apply_steer, self.apply_steer_last, CS.out.steeringTorque, LKAS_LIMITS, ss=True)
+      self.apply_steer_last = apply_steer
+      if apply_steer > 229 and False:
+        apply_steer_orig = apply_steer
+        apply_steer = (apply_steer - 229) * 2 + apply_steer
+        if apply_steer > 240:
+            self.apply_steer_over_max_counter += 1
+            if self.apply_steer_over_max_counter > 3:
+                apply_steer = apply_steer_orig
+                self.apply_steer_over_max_counter = 0
+            else:
+                self.apply_steer_over_max_counter = 0
+      elif apply_steer < -229 and False:
+        apply_steer_orig = apply_steer
+        apply_steer = (apply_steer + 229) * 2 + apply_steer
+        if apply_steer < -240:
+            self.apply_steer_over_max_counter+= 1
+            if self.apply_steer_over_max_counter > 3:
+                apply_steer = apply_steer_orig
+                self.apply_steer_over_max_counter = 0
+            else:
+                self.apply_steer_over_max_counter = 0
+      else:
+        self.apply_steer_over_max_counter = 0
+
+    self.apply_steer_last = apply_steer
+
+    # steer torque is converted back to CAN reference (positive when steering right)
+    apply_steer = -apply_steer
 
     if not self.CP.pcmCruiseSpeed:
       if not self.last_speed_limit_sign_tap_prev and self.last_speed_limit_sign_tap:
@@ -237,7 +267,8 @@ class CarController:
                                                       CS.CP.openpilotLongitudinalControl))
 
     # wind brake from air resistance decel at high speed
-    wind_brake = interp(CS.out.vEgo, [0.0, 2.3, 35.0], [0.001, 0.002, 0.15])
+    #wind_brake = interp(CS.out.vEgo, [0.0, 2.3, 35.0], [0.001, 0.002, 0.15])
+    wind_brake = 0.001 + 0.00035 * (CS.out.vEgo * CS.out.vEgo)
     # all of this is only relevant for HONDA NIDEC
     max_accel = interp(CS.out.vEgo, self.params.NIDEC_MAX_ACCEL_BP, self.params.NIDEC_MAX_ACCEL_V)
     # TODO this 1.44 is just to maintain previous behavior
@@ -259,9 +290,9 @@ class CarController:
       pcm_accel = int(1.0 * self.params.NIDEC_GAS_MAX)
     else:
       pcm_speed_V = [0.0,
-                     clip(CS.out.vEgo - 2.0, 0.0, 100.0),
-                     clip(CS.out.vEgo + 2.0, 0.0, 100.0),
-                     clip(CS.out.vEgo + 5.0, 0.0, 100.0)]
+                     clip(CS.out.vEgo - 3.0, 0.0, 100.0),
+                     clip(CS.out.vEgo + 1.0, 0.0, 100.0),
+                     clip(CS.out.vEgo + 4.0, 0.0, 100.0)]
       pcm_speed = interp(gas - brake, pcm_speed_BP, pcm_speed_V)
       pcm_accel = int(clip((accel / 1.44) / max_accel, 0.0, 1.0) * self.params.NIDEC_GAS_MAX)
 
