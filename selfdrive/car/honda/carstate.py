@@ -308,8 +308,11 @@ class CarState(CarStateBase):
       ]
 
     if CP.carFingerprint in SERIAL_STEERING:
-      messages = [("STEER_MOTOR_TORQUE", 100),
-                ("STEER_STATUS", 100)]
+      messages = [
+        ("STEERING_CONTROL", 100),
+        ("STEER_MOTOR_TORQUE", 100),
+        ("STEER_STATUS", 100)
+        ]
 
     if CP.carFingerprint in HONDA_BOSCH_RADARLESS:
       messages.append(("LKAS_HUD", 10))
