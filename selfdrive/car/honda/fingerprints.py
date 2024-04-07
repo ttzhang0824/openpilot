@@ -14,12 +14,6 @@ FINGERPRINTS = {
     }]
 }
 
-# add DIAG_MSGS to fingerprints
-for c in FINGERPRINTS:
-  for f, _ in enumerate(FINGERPRINTS[c]):
-    for d in DIAG_MSGS:
-      FINGERPRINTS[c][f][d] = DIAG_MSGS[d]
-
 FW_VERSIONS = {
   CAR.ACCORD: {
     (Ecu.programmedFuelInjection, 0x18da10f1, None): [
