@@ -46,7 +46,7 @@ class CarControllerParams:
     self.STEER_LOOKUP_V = [v * -1 for v in CP.lateralParams.torqueV][1:][::-1] + list(CP.lateralParams.torqueV)
 
 class LKAS_LIMITS:
-  STEER_MAX = 239
+  STEER_MAX = 240
   STEER_THRESHOLD = 15
   STEER_DELTA_UP = 5
   STEER_DELTA_DOWN = 9
