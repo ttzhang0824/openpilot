@@ -78,9 +78,9 @@ class CarInterface(CarInterfaceBase):
     else:
       # default longitudinal tuning for all hondas
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
-      ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
+      ret.longitudinalTuning.kpV = [1.4, 0.96, 0.6]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.25, 0.16]
+      ret.longitudinalTuning.kiV = [0.18, 0.12]
 
     eps_modified = False
     for fw in car_fw:
@@ -290,9 +290,9 @@ class CarInterface(CarInterfaceBase):
         ret.wheelbase = 2.82
         ret.centerToFront = ret.wheelbase * 0.428
         ret.steerRatio = 15.66  # as spec
-        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 240], [0, 240]]  # TODO: determine if there is a dead zone at the top end
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 239], [0, 239]]  # TODO: determine if there is a dead zone at the top end
         tire_stiffness_factor = 0.444
-        ret.steerActuatorDelay = 0.35
+        ret.steerActuatorDelay = 0.3
         #ret.lateralTuning.pid.kf = 0.000035
         #ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.115], [0.052]]
         CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
