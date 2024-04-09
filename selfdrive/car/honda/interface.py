@@ -80,7 +80,7 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kpBP = [0., 5., 35.]
       ret.longitudinalTuning.kpV = [1.4, 0.96, 0.6]
       ret.longitudinalTuning.kiBP = [0., 35.]
-      ret.longitudinalTuning.kiV = [0.18, 0.12]
+      ret.longitudinalTuning.kiV = [0.25, 0.18]
 
     eps_modified = False
     for fw in car_fw:
