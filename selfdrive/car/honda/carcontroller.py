@@ -239,7 +239,7 @@ class CarController:
     self.apply_steer_last = apply_steer
 
     # steer torque is converted back to CAN reference (positive when steering right)
-    apply_steer = -apply_steer
+    # apply_steer = -apply_steer
 
     if not self.CP.pcmCruiseSpeed:
       if not self.last_speed_limit_sign_tap_prev and self.last_speed_limit_sign_tap:
