@@ -10,6 +10,7 @@ from openpilot.selfdrive.car import create_button_events, get_safety_config
 from openpilot.selfdrive.car.interfaces import CarInterfaceBase
 from openpilot.selfdrive.car.disable_ecu import disable_ecu
 
+from openpilot.selfdrive.car import STD_CARGO_KG, CivicParams, scale_tire_stiffness
 
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
