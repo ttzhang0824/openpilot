@@ -44,7 +44,7 @@ def get_can_messages(CP, gearbox_msg):
   else:
       messages.append(("STEER_STATUS", 100))
     
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX):
+  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.ACURA_MDX, CAR.ACURA_MDX_20A):
     messages.append((gearbox_msg, 50))
   else:
     messages.append((gearbox_msg, 100))
