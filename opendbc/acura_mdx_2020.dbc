@@ -224,7 +224,7 @@ BO_ 145 KINEMATICS: 8 XXX
  SG_ LAT_ACCEL : 7|8@0+ (0.02,-2.56) [-20|20] "m/s2" EON
  SG_ YAW : 39|8@0- (.02,0) [0|255] "" XXX
 
-BO_ 228 STEERING_CONTROL: 5 ADAS
+BO_ 232 STEERING_CONTROL: 5 ADAS
  SG_ STEER_TORQUE_REQUEST : 23|1@0+ (1,0) [0|1] "" EPS
  SG_ SET_ME_X00 : 31|8@0+ (1,0) [0|0] "" EPS
  SG_ COUNTER : 37|2@0+ (1,0) [0|3] "" EPS
@@ -326,10 +326,10 @@ CM_ SG_ 773 PASS_AIRBAG_ON "Might just be indicator light";
 CM_ SG_ 780 CRUISE_SPEED "255 = no speed";
 CM_ SG_ 804 CRUISE_SPEED_PCM "255 = no speed";
 CM_ SG_ 829 BEEP "beeps are pleasant, chimes are for warnngs etc...";
-CM_ SG_ 228 SEND_LIN_WHOLE_DATA "takes the MCU LKAS STEER_TORQUE, EPS ";
-CM_ SG_ 228 LDW_SIGNAL_2 "LKAS B1O4";
-CM_ SG_ 228 LDW_SIGNAL_1 "LKAS B1 5";
-CM_ SG_ 228 DISABLE_LIN_BOARD_WIGGLE_BIT "this makes the apply_steer value never be the same. it will c hange the LSB. so it could actually go over OP max torque by 1.. this needs to be redone, but it works for now";
+CM_ SG_ 232 SEND_LIN_WHOLE_DATA "takes the MCU LKAS STEER_TORQUE, EPS ";
+CM_ SG_ 232 LDW_SIGNAL_2 "LKAS B1O4";
+CM_ SG_ 232 LDW_SIGNAL_1 "LKAS B1 5";
+CM_ SG_ 232 DISABLE_LIN_BOARD_WIGGLE_BIT "this makes the apply_steer value never be the same. it will c hange the LSB. so it could actually go over OP max torque by 1.. this needs to be redone, but it works for now";
 CM_ SG_ 400 LIN_INTERFACE_FATAL_ERROR "";
 CM_ SG_ 400 OP_STEERING_CONTROL_MSG_ACTIVE "this comes on when the LIN_interface sees the 0xe4 message";
 CM_ SG_ 400 STEER_STATUS "11 is EPS fail for oversteer. look at code for more";
